@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/source"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Timesnownews"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="16sp"
+            android:layout_marginStart="4dp"/>
+
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            tools:srcCompat="@tools:sample/avatars"
+            android:id="@+id/articleImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title"
+            app:layout_constraintStart_toEndOf="@+id/title"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintBottom_toBottomOf="@+id/title"/>
+
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            android:layout_marginTop="8dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@+id/source"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="India vs New Zealand 5th ODI Preview: After Hamilton debacle, India look to end tour on high - The Indian Express"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="20sp"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/articleImage"
+            app:layout_constraintHorizontal_bias="1.0"
+            android:textAlignment="viewStart"
+            android:layout_marginStart="4dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/publishedDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="@tools:sample/date/ddmmyy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="4dp"/>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_more"
+            android:id="@+id/imgMore"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/articleImage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteY="112dp"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#DCDCDC"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/imgMore"/>
+</android.support.constraint.ConstraintLayout>

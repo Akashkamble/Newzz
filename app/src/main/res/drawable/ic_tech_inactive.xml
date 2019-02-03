@@ -1,0 +1,65 @@
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="vector"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:name="face_line"
+        android:pathData="M 7.902 45.732 L 7.902 18.11 L 39.915 18.11 L 39.915 45.732 Z"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>
+    <path
+        android:name="antenna_circle"
+        android:pathData="M 21.256 13.354 C 21.256 11.89 22.444 10.701 23.909 10.701 C 25.373 10.701 26.561 11.89 26.561 13.354 C 26.561 14.82 25.373 16.006 23.909 16.006 C 22.444 16.006 21.256 14.82 21.256 13.354 Z"
+        android:fillColor="#979797"
+        android:strokeColor="#979797"
+        android:strokeWidth="0.1"/>
+    <path
+        android:name="lips"
+        android:pathData="M 14.488 45.24 L 14.488 40.187 L 33.695 40.061 L 33.695 45.366"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>
+    <path
+        android:name="eye1"
+        android:pathData="M 11.195 29.03 C 11.195 26.252 13.447 24 16.225 24 C 19.004 24 21.256 26.252 21.256 29.03 C 21.256 31.809 19.004 34.061 16.225 34.061 C 13.447 34.061 11.195 31.809 11.195 29.03 Z"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>
+    <path
+        android:name="eye2"
+        android:pathData="M 26.561 29.031 C 26.561 26.252 28.813 24 31.591 24 C 34.369 24 36.622 26.252 36.622 29.031 C 36.622 31.809 34.369 34.061 31.591 34.061 C 28.813 34.061 26.561 31.809 26.561 29.031 Z"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>
+    <path
+        android:name="antenna"
+        android:pathData="M 23.634 17.378 L 23.634 14.634"
+        android:fillColor="#D8D8D8"
+        android:strokeColor="#979797"
+        android:strokeWidth="1"/>
+    <!--<path
+        android:name="wave_1"
+        android:pathData="M 19.976 9.695 C 19.976 9.695 21.883 8.037 24.183 8.048 C 26.456 8.058 28.207 9.695 28.207 9.695"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>
+    <path
+        android:name="wave_2"
+        android:pathData="M 17.415 6.951 C 17.415 6.951 20.657 4.717 24.366 4.755 C 27.601 4.791 30.585 6.951 30.585 6.951"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>
+    <path
+        android:name="wave3"
+        android:pathData="M 15.62 3.933 C 15.62 3.933 19.26 1.158 24.215 1.19 C 28.854 1.224 32.165 3.933 32.165 3.933"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>-->
+    <path
+        android:name="ear1"
+        android:pathData="M 7.456 22.346 L 3.588 22.346 L 3.588 35.667 L 7.671 35.667"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>
+    <path
+        android:name="ear2"
+        android:pathData="M 40.115 22.346 L 44.412 22.346 L 44.412 35.667 L 39.9 35.667"
+        android:strokeColor="#979797"
+        android:strokeWidth="2"/>
+</vector>

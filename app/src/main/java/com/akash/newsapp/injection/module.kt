@@ -1,12 +1,14 @@
 package com.akash.newsapp.injection
 
 import android.arch.persistence.room.Room
-import com.akash.newsapp.NewsViewModel
+import com.akash.newsapp.viewmodels.NewsViewModel
 import com.akash.newsapp.data.db.NewsRoomDataBase
 import com.akash.newsapp.data.repositories.NewsRepository
 import com.akash.newsapp.data.repositories.NewsRepositoryImpl
-import com.akash.newsapp.internals.Constants
 import com.akash.newsapp.network.NewsApiService
+import com.akash.newsapp.viewmodels.GeneralViewModel
+import com.akash.newsapp.viewmodels.BusinessViewModel
+import com.akash.newsapp.viewmodels.TechnologyViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -19,6 +21,9 @@ val applicationModule = module {
     }
     factory { NewsApiService() }
     factory { get<NewsRoomDataBase>().getNewsDao() }
-    single { NewsRepositoryImpl(get(), get()) as NewsRepository }
+    factory { NewsRepositoryImpl(get(), get()) as NewsRepository }
     viewModel { NewsViewModel(get()) }
+    viewModel { GeneralViewModel(get()) }
+    viewModel { BusinessViewModel(get()) }
+    viewModel { TechnologyViewModel(get()) }
 }

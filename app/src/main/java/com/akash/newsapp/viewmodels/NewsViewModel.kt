@@ -1,4 +1,4 @@
-package com.akash.newsapp
+package com.akash.newsapp.viewmodels
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -31,12 +31,6 @@ class NewsViewModel constructor(val newsRepository: NewsRepository) : ViewModel(
         }
     }
 
-    fun getLocalHeadLines(): List<NewsArticle> {
-        var list = emptyList<NewsArticle>()
-        runBlocking(Dispatchers.IO) {
-           list = newsRepository.getLocalArticles()
-        }
-        return list
-    }
     private suspend fun getArticlesByCategory() = newsRepository.getArticlesByCategoryAsync("science")
+    private suspend fun getScienceArticlesAsync() = newsRepository.getArticlesByCategoryAsync("science")
 }

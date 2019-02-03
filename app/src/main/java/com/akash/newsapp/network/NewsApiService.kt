@@ -12,14 +12,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NewsApiService {
-    @GET("top-headlines?sortBy=publishedAt")
-    fun getHeadLines(
-        @Query("country") country: String
-    ): Deferred<NewsResponse>
 
-    @GET("top-headlines?sortBy=publishedAt")
-    fun getArticlesByCateGory(
-        @Query("category") category : String,
+    @GET("top-headlines?sortBy=publishedAt&pageSize=100")
+    fun getArticlesByCateGoryAsync(
+        @Query("category") category: String,
         @Query("country") country: String = Constants().COUNTRY
     ): Deferred<NewsResponse>
 

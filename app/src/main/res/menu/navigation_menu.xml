@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/general"
+            android:title="General"
+            app:showAsAction="ifRoom"
+            android:icon="@drawable/anim_general"/>
+    <item
+            android:id="@+id/science"
+            android:title="Business"
+            app:showAsAction="ifRoom"
+            android:icon="@drawable/anim_business"/>
+    <item
+            android:id="@+id/technology"
+            android:title="Technology"
+            app:showAsAction="ifRoom"
+            android:icon="@drawable/anim_tech"/>
+</menu>

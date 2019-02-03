@@ -4,9 +4,6 @@ import android.arch.persistence.room.*
 
 @Entity(tableName = "Articles")
 data class NewsArticle (
-//    @Nullable
-//    val author: String?,
-//    val content: String,
     @PrimaryKey
     val publishedAt: String,
     @Embedded(prefix = "news")
