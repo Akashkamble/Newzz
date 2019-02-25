@@ -1,6 +1,7 @@
 package com.akash.newsapp.adapters
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,10 @@ class ArticleListAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
     fun setData(articleList: List<NewsArticle>) {
         this.articleList = articleList
         notifyDataSetChanged()
+    }
+
+    fun clearAnimations() {
+        view.animation = null
     }
 
     private fun getDate(isoDate: String): String {
