@@ -15,14 +15,16 @@ import android.widget.TextView
 import android.widget.Toast
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.ArticleListAdapter
+import com.akash.newsapp.internals.CustomTabsUtils
 import com.akash.newsapp.viewmodels.GeneralViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class GeneralFragment : Fragment() {
+class GeneralFragment : Fragment(),ArticleListAdapter.ItemClickListener {
     private val TAG = GeneralFragment::class.java.simpleName
+
     private lateinit var noConnectionView : TextView
     private lateinit var articleListView : RecyclerView
     private lateinit var articleListAdapter: ArticleListAdapter
@@ -34,11 +36,9 @@ class GeneralFragment : Fragment() {
          If getArticles invoked on onCreateView there will be one request every time when fragment is visible.*/
         generalViewModel.getArticles()
     }
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.article_list_view, container, false)
-        articleListAdapter = ArticleListAdapter()
+        articleListAdapter = ArticleListAdapter(this@GeneralFragment)
         layoutManager = LinearLayoutManager(activity)
         noConnectionView = view.findViewById(R.id.no_connection)
         articleListView = view.findViewById(R.id.article_list)
@@ -62,6 +62,11 @@ class GeneralFragment : Fragment() {
                 Toast.makeText(activity,"$it",Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+
+    override fun onItemClick(url: String) {
+        CustomTabsUtils.launch(activity!!,url)
     }
 
     companion object {

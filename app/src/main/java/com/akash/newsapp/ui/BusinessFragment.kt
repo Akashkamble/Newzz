@@ -14,10 +14,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.ArticleListAdapter
+import com.akash.newsapp.internals.CustomTabsUtils
 import com.akash.newsapp.viewmodels.BusinessViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class BusinessFragment : Fragment() {
+class BusinessFragment : Fragment(), ArticleListAdapter.ItemClickListener {
+
+
     private val TAG = BusinessFragment::class.java.simpleName
     private lateinit var noConnectionView : TextView
     private lateinit var articleListView : RecyclerView
@@ -33,7 +36,7 @@ class BusinessFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.article_list_view, container, false)
-        articleListAdapter = ArticleListAdapter()
+        articleListAdapter = ArticleListAdapter(this@BusinessFragment)
         noConnectionView = view.findViewById(R.id.no_connection)
         articleListView = view.findViewById(R.id.article_list)
         noConnectionView.text = "Science Fragment"
@@ -57,6 +60,9 @@ class BusinessFragment : Fragment() {
         })
     }
 
+    override fun onItemClick(url: String) {
+        CustomTabsUtils.launch(activity!!,url)
+    }
 
     companion object {
         fun newInstance(): GeneralFragment = GeneralFragment()

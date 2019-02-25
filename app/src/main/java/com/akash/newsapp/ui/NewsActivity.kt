@@ -6,9 +6,9 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import com.akash.newsapp.viewmodels.NewsViewModel
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.NewsCategoryAdapter
+import com.akash.newsapp.viewmodels.NewsViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NewsActivity : AppCompatActivity() {
@@ -44,23 +44,6 @@ class NewsActivity : AppCompatActivity() {
                 bottomNavigationView.menu.getItem(position).isChecked = true
             }
         })
-//        var string = "2019-01-26T23:05:00Z"
-//        var offsetDateTime : OffsetDateTime = DateConverters.toOffsetDateTime(string)!!
-//        var abc = DateConverters.fromOffsetDateTime(offsetDateTime)
-//        var time : ZonedDateTime = DateConverters.getDate(string).withZoneSameLocal(ZoneId.systemDefault())
-//        Log.e(TAG,"Hour: ${time.toLocalDateTime().hour} ${time.toLocalDateTime().minute} : ${time.toLocalDateTime().dayOfMonth} : $abc")
-//        newsViewModel.getHeadLines()
-        /*Log.e(TAG, Constants().API_KEY)
-        newsViewModel.errorMessage.observe(this, Observer {
-            if (!it.isNullOrEmpty())
-                Toast.makeText(baseContext, it, Toast.LENGTH_SHORT).show()
-        })
-        newsViewModel.headLineList.observe(this, Observer {
-            Log.e(TAG, "size : ${it?.size}")
-            if (it?.size!! > 0) {
-                Log.e(TAG,"ABC  ${it[0].description}")
-            }
-        })*/
     }
 
     private fun setTitleText() {

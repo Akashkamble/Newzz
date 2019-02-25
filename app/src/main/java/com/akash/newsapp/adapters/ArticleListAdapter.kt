@@ -3,6 +3,7 @@ package com.akash.newsapp.adapters
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.OrientationEventListener
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -15,7 +16,7 @@ import com.bumptech.glide.Glide
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 
-class ArticleListAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
+class ArticleListAdapter(private val listener: ItemClickListener) : RecyclerView.Adapter<ArticleViewHolder>() {
     private var articleList: List<NewsArticle> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.article_list_item, parent, false))
@@ -26,7 +27,7 @@ class ArticleListAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        holder.bindData(articleList[position])
+        holder.bindData(articleList[position],listener)
         setAnimation(holder.itemView,position)
     }
 
@@ -48,6 +49,10 @@ class ArticleListAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
         super.onViewDetachedFromWindow(holder)
     }
 
+    interface ItemClickListener{
+       fun onItemClick(url: String)
+    }
+
 }
 
 class ArticleViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -58,12 +63,17 @@ class ArticleViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
     private val date: TextView = view.findViewById(R.id.publishedDate)
 //    val more: ImageView = view.findViewById(R.id.imgMore)
 
-    fun bindData(newsArticle: NewsArticle) {
+    fun bindData(newsArticle: NewsArticle,listener: ArticleListAdapter.ItemClickListener) {
         source.text = if(!(newsArticle.source.name).isEmpty()) newsArticle.source.name else "Unknown"
         title.text = newsArticle.title
         date.text = getDate(newsArticle.publishedAt)
         Glide.with(articleImage.context).load(newsArticle.urlToImage).into(articleImage)
+        view.setOnClickListener {
+            listener.onItemClick(newsArticle.url)
+        }
     }
+
+
 
     fun clearAnimations() {
         view.animation = null
@@ -73,6 +83,7 @@ class ArticleViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
         val time: ZonedDateTime = DateConverters.getDate(isoDate).withZoneSameLocal(ZoneId.systemDefault())
         return "${time.dayOfMonth}/${time.monthValue}/${time.year}"
     }
+
 
 
 
