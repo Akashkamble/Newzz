@@ -49,9 +49,6 @@ class TechnologyFragment : Fragment() {
             if(it?.size!! > 0){
                 articleListAdapter.setData(it)
                 noConnectionView.visibility = View.GONE
-                for(article in it){
-                    Log.e(TAG,"url : ${article.urlToImage}")
-                }
             }
         })
         technologyViewModel.viewModelMessage.observe(this, Observer {
