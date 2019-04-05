@@ -1,10 +1,10 @@
 package com.akash.newsapp.ui
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.NewsCategoryAdapter
@@ -15,7 +15,7 @@ class NewsActivity : AppCompatActivity() {
     val TAG = NewsActivity::class.java.simpleName
 
     val newsViewModel: NewsViewModel by viewModel()
-    private lateinit var viewPager: ViewPager
+    private lateinit var viewPager: androidx.viewpager.widget.ViewPager
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var viewPagerAdapter: NewsCategoryAdapter
     private lateinit var toolBar : Toolbar
@@ -28,7 +28,7 @@ class NewsActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         setUpViewPager()
         setTitleText()
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+        viewPager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {}
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}

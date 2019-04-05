@@ -1,7 +1,7 @@
 package com.akash.newsapp.data.converters
 
-import android.arch.persistence.room.TypeConverter
-import android.support.annotation.NonNull
+import androidx.room.TypeConverter
+import androidx.annotation.NonNull
 import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime

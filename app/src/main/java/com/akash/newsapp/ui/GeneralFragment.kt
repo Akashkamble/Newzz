@@ -1,11 +1,12 @@
 package com.akash.newsapp.ui
 
-import android.arch.lifecycle.Observer
+import android.app.Activity
+import androidx.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,24 +23,27 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class GeneralFragment : Fragment(),ArticleListAdapter.ItemClickListener {
+class GeneralFragment : androidx.fragment.app.Fragment(),ArticleListAdapter.ItemClickListener {
     private val TAG = GeneralFragment::class.java.simpleName
 
     private lateinit var noConnectionView : TextView
-    private lateinit var articleListView : RecyclerView
+    private lateinit var articleListView : androidx.recyclerview.widget.RecyclerView
     private lateinit var articleListAdapter: ArticleListAdapter
     private val generalViewModel : GeneralViewModel by viewModel()
-    private lateinit var layoutManager: LinearLayoutManager
-    override fun onAttach(context: Context?) {
+    private lateinit var layoutManager: androidx.recyclerview.widget.LinearLayoutManager
+
+
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-         /*getArticles in onAttach so that we will get article list only once.
-         If getArticles invoked on onCreateView there will be one request every time when fragment is visible.*/
+        /*getArticles in onAttach so that we will get article list only once.
+        If getArticles invoked on onCreateView there will be one request every time when fragment is visible.*/
         generalViewModel.getArticles()
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.article_list_view, container, false)
         articleListAdapter = ArticleListAdapter(this@GeneralFragment)
-        layoutManager = LinearLayoutManager(activity)
+        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         noConnectionView = view.findViewById(R.id.no_connection)
         articleListView = view.findViewById(R.id.article_list)
         noConnectionView.text = "General Fragment"

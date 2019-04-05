@@ -1,6 +1,6 @@
 package com.akash.newsapp.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.OrientationEventListener
@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 
-class ArticleListAdapter(private val listener: ItemClickListener) : RecyclerView.Adapter<ArticleViewHolder>() {
+class ArticleListAdapter(private val listener: ItemClickListener) : androidx.recyclerview.widget.RecyclerView.Adapter<ArticleViewHolder>() {
     private var articleList: List<NewsArticle> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.article_list_item, parent, false))
@@ -55,7 +55,7 @@ class ArticleListAdapter(private val listener: ItemClickListener) : RecyclerView
 
 }
 
-class ArticleViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class ArticleViewHolder(private val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
     private val TAG = ArticleViewHolder::class.java.simpleName
     private val source: TextView = view.findViewById(R.id.source)
     private val title: TextView = view.findViewById(R.id.title)

@@ -1,6 +1,6 @@
 package com.akash.newsapp.data.response
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 @Entity(tableName = "Articles")
 data class NewsArticle (

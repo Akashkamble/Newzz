@@ -1,6 +1,6 @@
 package com.akash.newsapp.data.db
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.akash.newsapp.data.converters.DateConverters
 import com.akash.newsapp.data.response.NewsArticle
 

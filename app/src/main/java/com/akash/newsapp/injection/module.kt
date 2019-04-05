@@ -1,6 +1,6 @@
 package com.akash.newsapp.injection
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import com.akash.newsapp.viewmodels.NewsViewModel
 import com.akash.newsapp.data.db.NewsRoomDataBase
 import com.akash.newsapp.data.repositories.NewsRepository
