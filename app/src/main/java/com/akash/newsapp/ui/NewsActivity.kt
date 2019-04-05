@@ -2,19 +2,17 @@ package com.akash.newsapp.ui
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.NewsCategoryAdapter
-import com.akash.newsapp.viewmodels.NewsViewModel
+import com.akash.newsapp.categoryconstants.Category
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NewsActivity : AppCompatActivity() {
     val TAG = NewsActivity::class.java.simpleName
 
-    val newsViewModel: NewsViewModel by viewModel()
     private lateinit var viewPager: androidx.viewpager.widget.ViewPager
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var viewPagerAdapter: NewsCategoryAdapter
@@ -57,9 +55,9 @@ class NewsActivity : AppCompatActivity() {
 
     private fun setUpViewPager() {
         viewPagerAdapter = NewsCategoryAdapter(supportFragmentManager)
-        viewPagerAdapter.addFragmnet(GeneralFragment())
-        viewPagerAdapter.addFragmnet(BusinessFragment())
-        viewPagerAdapter.addFragmnet(TechnologyFragment())
+        viewPagerAdapter.addFragmnet(ArticleFragment.newInstance(Category.GENERAL))
+        viewPagerAdapter.addFragmnet(ArticleFragment.newInstance(Category.BUSINESS))
+        viewPagerAdapter.addFragmnet(ArticleFragment.newInstance(Category.TECH))
         viewPager.adapter = viewPagerAdapter
     }
 
