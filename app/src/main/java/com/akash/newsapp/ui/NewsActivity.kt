@@ -1,22 +1,23 @@
 package com.akash.newsapp.ui
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.util.Log
+import androidx.viewpager.widget.ViewPager
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.NewsCategoryAdapter
 import com.akash.newsapp.categoryconstants.Category
-import org.koin.android.viewmodel.ext.android.viewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class NewsActivity : AppCompatActivity() {
     val TAG = NewsActivity::class.java.simpleName
 
-    private lateinit var viewPager: androidx.viewpager.widget.ViewPager
-    private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var viewPagerAdapter: NewsCategoryAdapter
-    private lateinit var toolBar : Toolbar
+    private lateinit var viewPager: ViewPager
+    private lateinit var toolBar: Toolbar
+    private lateinit var bottomNavigationView: BottomNavigationView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,38 +27,37 @@ class NewsActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         setUpViewPager()
         setTitleText()
-        viewPager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener{
+        viewPager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
-                when(position){
-                    0->toolBar.title = "General"
-                    1->toolBar.title = "Business"
-                    2->toolBar.title = "Technology"
-                    else->toolBar.title = "General"
+                when (position) {
+                    0 -> toolBar.title = TITLE_GENERAL
+                    1 -> toolBar.title = TITLE_BUSINESS
+                    2 -> toolBar.title = TITLE_TECHNOLOGY
+                    else -> toolBar.title = TITLE_GENERAL
                 }
-                Log.e(TAG,"position :$position")
                 bottomNavigationView.menu.getItem(position).isChecked = true
             }
         })
     }
 
     private fun setTitleText() {
-        when(viewPager.currentItem){
-            0->toolBar.title = "General"
-            1 ->toolBar.title = "Business"
-            2->toolBar.title = "Technology"
+        when (viewPager.currentItem) {
+            0 -> toolBar.title = TITLE_GENERAL
+            1 -> toolBar.title = TITLE_BUSINESS
+            2 -> toolBar.title = TITLE_TECHNOLOGY
         }
 
     }
 
     private fun setUpViewPager() {
         viewPagerAdapter = NewsCategoryAdapter(supportFragmentManager)
-        viewPagerAdapter.addFragmnet(ArticleFragment.newInstance(Category.GENERAL))
-        viewPagerAdapter.addFragmnet(ArticleFragment.newInstance(Category.BUSINESS))
-        viewPagerAdapter.addFragmnet(ArticleFragment.newInstance(Category.TECH))
+        viewPagerAdapter.addFragment(ArticleFragment.newInstance(Category.GENERAL))
+        viewPagerAdapter.addFragment(ArticleFragment.newInstance(Category.BUSINESS))
+        viewPagerAdapter.addFragment(ArticleFragment.newInstance(Category.TECH))
         viewPager.adapter = viewPagerAdapter
     }
 
@@ -66,20 +66,26 @@ class NewsActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.general -> {
                 viewPager.currentItem = 0
-                toolBar.title = "General"
-                    return@OnNavigationItemSelectedListener true
+                toolBar.title = TITLE_GENERAL
+                return@OnNavigationItemSelectedListener true
             }
             R.id.science -> {
                 viewPager.currentItem = 1
-                toolBar.title = "Business"
+                toolBar.title = TITLE_BUSINESS
                 return@OnNavigationItemSelectedListener true
             }
             R.id.technology -> {
                 viewPager.currentItem = 2
-                toolBar.title = "Technology"
+                toolBar.title = TITLE_TECHNOLOGY
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
+    }
+
+    companion object {
+        const val TITLE_GENERAL = "General"
+        const val TITLE_BUSINESS = "Business"
+        const val TITLE_TECHNOLOGY = "Technology"
     }
 }
