@@ -1,7 +1,6 @@
 package com.akash.newsapp.internals
 
 import android.app.Activity
-import android.content.Context
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
@@ -15,8 +14,12 @@ internal class CustomTabsUtils {
                 builder = CustomTabsIntent.Builder()
                     .setToolbarColor(ContextCompat.getColor(activity.baseContext, R.color.colorPrimary))
                     .setShowTitle(true)
-                    .setStartAnimations(activity.baseContext,R.anim.slide_in_right,R.anim.slide_out_left)
-                    .setExitAnimations(activity.baseContext,android.R.anim.slide_in_left,android.R.anim.slide_out_right)
+                    .setStartAnimations(activity.baseContext, R.anim.slide_in_right, R.anim.slide_out_left)
+                    .setExitAnimations(
+                        activity.baseContext,
+                        android.R.anim.slide_in_left,
+                        android.R.anim.slide_out_right
+                    )
                     .build()
             }
             builder?.launchUrl(activity, Uri.parse(url))

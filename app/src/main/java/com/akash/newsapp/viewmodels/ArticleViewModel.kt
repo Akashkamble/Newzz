@@ -1,41 +1,68 @@
 package com.akash.newsapp.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import android.util.Log
-import com.akash.newsapp.categoryconstants.Category
+import com.akash.newsapp.adapters.ArticleRowViewModel
+import com.akash.newsapp.base.BaseRowModel
+import com.akash.newsapp.base.Event
 import com.akash.newsapp.data.repositories.NewsRepository
-import com.akash.newsapp.data.response.NewsArticle
 import kotlinx.coroutines.*
-import java.lang.Exception
 
-class ArticleViewModel constructor(val newsRepository: NewsRepository) : ViewModel() {
+class ArticleViewModel constructor(private val newsRepository: NewsRepository) : ViewModel() {
+
     private val TAG = ArticleViewModel::class.java.simpleName
-    private val generalArticleList = MutableLiveData<List<NewsArticle>>().apply {
-        value = emptyList()
+    private val job = SupervisorJob()
+    private val viewModelScope = CoroutineScope(Dispatchers.Main) + job
+    private val _event = MutableLiveData<Event<ViewEvent>>()
+    val event = _event
+
+    private val _articleList = MutableLiveData<MutableList<BaseRowModel>>().apply {
+        value = mutableListOf()
     }
-    private val message = MutableLiveData<String>().apply {
-        value = ""
+    val articleList: LiveData<MutableList<BaseRowModel>> = _articleList
+
+    val gotList = Transformations.map(articleList) {
+        it.size > 0
     }
-    val viewModelMessage: LiveData<String> = message
-    val articleList: LiveData<List<NewsArticle>> = generalArticleList
-    fun getArticlesByCategory(category: String, page : Int = 1) {
-        Log.e(TAG, "getArticles invoked ")
-        GlobalScope.launch {
+
+    fun getArticlesByCategory(category: String, page: Int = 1) {
+        val tempList = mutableListOf<BaseRowModel>()
+        viewModelScope.launch {
             try {
                 val response = newsRepository.getArticlesByCategoryAsync(category).await()
-                withContext(Dispatchers.Main){
-                    generalArticleList.value = response.articles
+                withContext(Dispatchers.Main) {
+                    response.articles.toMutableList().forEach { article ->
+                        article.urlToImage?.let {
+                            tempList.add(ArticleRowViewModel(article, this@ArticleViewModel))
+                        }
+                    }
+                    _articleList.value = tempList
                 }
 
             } catch (e: Exception) {
-                Log.e(TAG,"exception : ${e.localizedMessage}")
-                withContext(Dispatchers.Main){
-                    message.value = e.localizedMessage
+                Log.e(TAG, "exception : ${e.localizedMessage}")
+                withContext(Dispatchers.Main) {
+                    _event.value = Event(ViewEvent.ShowToast(e.localizedMessage))
                 }
             }
         }
+    }
+
+    fun openArticleInBrowser(articleRowViewModel: ArticleRowViewModel) {
+        _event.value = Event(ViewEvent.NavigateToBrowser(articleRowViewModel.url))
+    }
+
+    sealed class ViewEvent {
+        data class NavigateToBrowser(val url: String) : ViewEvent()
+        data class ShowToast(val toastMessage: String) : ViewEvent()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 
 }

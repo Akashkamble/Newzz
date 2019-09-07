@@ -13,6 +13,7 @@ import retrofit2.http.Query
 
 interface NewsApiService {
 
+
     @GET("top-headlines?sortBy=publishedAt&pageSize=100")
     fun getArticlesByCateGoryAsync(
         @Query("category") category: String,
@@ -22,7 +23,7 @@ interface NewsApiService {
 
     companion object {
         operator fun invoke(): NewsApiService {
-            val requestInteceptor = Interceptor { chain ->
+            val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url()
                     .newBuilder()
@@ -36,7 +37,7 @@ interface NewsApiService {
             }
 
             val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(requestInteceptor)
+                .addInterceptor(requestInterceptor)
                 .build()
 
             return Retrofit.Builder()
