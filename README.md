@@ -12,8 +12,6 @@
 
 - [Kotlin Corountines](https://kotlinlang.org/docs/reference/coroutines-overview.html) (Asynchronous programming)
 
-- [Room](https://developer.android.com/topic/libraries/architecture/adding-components#room) (Persistance) **Not Implemented Yet**
-
 - [Retrofit](https://square.github.io/retrofit/) (Networking)
 
 
