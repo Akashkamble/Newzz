@@ -5,6 +5,8 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
+import coil.request.CachePolicy
 import com.akash.newsapp.adapters.RecyclerViewBindingAdapter
 import com.akash.newsapp.base.BaseRowModel
 import com.bumptech.glide.Glide
@@ -14,7 +16,9 @@ import com.bumptech.glide.Glide
  */
 @BindingAdapter("loadUrl")
 fun ImageView.loadUrl(url: String) {
-    Glide.with(this.context).load(url).into(this)
+    this.load(url) {
+        memoryCachePolicy(CachePolicy.READ_ONLY)
+    }
 }
 
 @BindingAdapter("listData")
