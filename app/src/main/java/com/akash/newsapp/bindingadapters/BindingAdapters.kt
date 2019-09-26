@@ -9,7 +9,6 @@ import coil.api.load
 import coil.request.CachePolicy
 import com.akash.newsapp.adapters.RecyclerViewBindingAdapter
 import com.akash.newsapp.base.BaseRowModel
-import com.bumptech.glide.Glide
 
 /**
  * Created by Akash on 2019-09-07
