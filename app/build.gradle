@@ -25,6 +25,16 @@ android {
     dataBinding {
         enabled = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -55,16 +65,16 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 
-    // Glide Libraries
-    implementation "com.github.bumptech.glide:glide:$rootProject.glide"
-    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
+
+    //Coil Library
+    implementation("io.coil-kt:coil:0.7.0")
 
     // ChromeCustomTabs
     implementation 'androidx.browser:browser:1.2.0-alpha07'
 
     // Testing Libraries
-    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    testImplementation 'junit:junit:4.12'
 }
