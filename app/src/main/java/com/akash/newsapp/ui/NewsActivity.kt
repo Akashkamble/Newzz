@@ -1,13 +1,19 @@
 package com.akash.newsapp.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
+import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.NewsCategoryAdapter
 import com.akash.newsapp.categoryconstants.Category
+import com.akash.newsapp.utils.PreferenceHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class NewsActivity : AppCompatActivity() {
     val TAG = NewsActivity::class.java.simpleName
@@ -16,17 +22,32 @@ class NewsActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager
     private lateinit var toolBar: Toolbar
     private lateinit var bottomNavigationView: BottomNavigationView
-
+    private lateinit var toolBarTitle: TextView
+    private lateinit var themeToggle: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(
+            if (NewsApplication.prefs!!.isDArk) {
+                R.style.DarkTheme
+            } else {
+                R.style.AppTheme
+            }
+        )
         setContentView(R.layout.activity_main)
         viewPager = findViewById(R.id.viewPager)
         toolBar = findViewById(R.id.toolbar)
+        toolBarTitle = toolBar.toolbarTitle
         bottomNavigationView = findViewById(R.id.bottomNavigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        themeToggle = toolBar.iv_theme_toggle
+
+        themeToggle.setOnClickListener {
+            toggleTheme()
+        }
         setUpViewPager()
         setTitleText()
+        setUpThemeToggleImage()
         viewPager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
 
@@ -34,21 +55,39 @@ class NewsActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> toolBar.title = TITLE_GENERAL
-                    1 -> toolBar.title = TITLE_BUSINESS
-                    2 -> toolBar.title = TITLE_TECHNOLOGY
-                    else -> toolBar.title = TITLE_GENERAL
+                    0 -> toolBarTitle.text = TITLE_GENERAL
+                    1 -> toolBarTitle.text = TITLE_BUSINESS
+                    2 -> toolBarTitle.text = TITLE_TECHNOLOGY
+                    else -> toolBarTitle.text = TITLE_GENERAL
                 }
                 bottomNavigationView.menu.getItem(position).isChecked = true
             }
         })
     }
 
+    private fun toggleTheme() {
+        restartActivity()
+    }
+
+    private fun restartActivity() {
+        NewsApplication.prefs!!.isDArk = !NewsApplication.prefs!!.isDArk
+        startActivity(Intent(this,NewsActivity::class.java))
+        finish()
+    }
+
+    private fun setUpThemeToggleImage() {
+        if (NewsApplication.prefs!!.isDArk) {
+            themeToggle.setImageResource(R.drawable.ic_light)
+        } else {
+            themeToggle.setImageResource(R.drawable.ic_dark)
+        }
+    }
+
     private fun setTitleText() {
         when (viewPager.currentItem) {
-            0 -> toolBar.title = TITLE_GENERAL
-            1 -> toolBar.title = TITLE_BUSINESS
-            2 -> toolBar.title = TITLE_TECHNOLOGY
+            0 -> toolBarTitle.text = TITLE_GENERAL
+            1 -> toolBarTitle.text = TITLE_BUSINESS
+            2 -> toolBarTitle.text = TITLE_TECHNOLOGY
         }
 
     }
@@ -66,17 +105,17 @@ class NewsActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.general -> {
                 viewPager.currentItem = 0
-                toolBar.title = TITLE_GENERAL
+                toolBarTitle.text = TITLE_GENERAL
                 return@OnNavigationItemSelectedListener true
             }
             R.id.science -> {
                 viewPager.currentItem = 1
-                toolBar.title = TITLE_BUSINESS
+                toolBarTitle.text = TITLE_BUSINESS
                 return@OnNavigationItemSelectedListener true
             }
             R.id.technology -> {
                 viewPager.currentItem = 2
-                toolBar.title = TITLE_TECHNOLOGY
+                toolBarTitle.text = TITLE_TECHNOLOGY
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -87,5 +126,6 @@ class NewsActivity : AppCompatActivity() {
         const val TITLE_GENERAL = "General"
         const val TITLE_BUSINESS = "Business"
         const val TITLE_TECHNOLOGY = "Technology"
+        const val IS_DARK = "is-dark"
     }
 }
