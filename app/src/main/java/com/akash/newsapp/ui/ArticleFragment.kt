@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
 import com.akash.newsapp.base.EventObserver
 import com.akash.newsapp.categoryconstants.Category
@@ -48,7 +49,15 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         articleViewModel.event.observe(this, EventObserver {
             when (it) {
-                is ArticleViewModel.ViewEvent.NavigateToBrowser -> CustomTabsUtils.launch(activity!!, it.url)
+                is ArticleViewModel.ViewEvent.NavigateToBrowser -> CustomTabsUtils.launch(
+                    activity!!,
+                    it.url,
+                    if (NewsApplication.prefs!!.isDArk) {
+                        R.color.colorPrimary_dark
+                    } else {
+                        R.color.colorPrimary
+                    }
+                )
                 is ArticleViewModel.ViewEvent.ShowToast -> {
                     Toast.makeText(activity!!, it.toastMessage, Toast.LENGTH_LONG).show()
                 }

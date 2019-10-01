@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorPrimary" format="color"/>
+    <attr name="colorPrimaryDark" format="color"/>
+    <attr name="bottomNavBackground" format="color"/>
+    <attr name="fragment_background" format="color"/>
+    <attr name="article_divider_color" format="color"/>
+    <attr name="source_text_color" format="color"/>
+    <attr name="article_text_color" format="color"/>
+    <attr name="bottom_nav_icon_tint_disable" format="color"/>
+    <attr name="bottom_nav_icon_tint_enable" format="color"/>
+</resources>

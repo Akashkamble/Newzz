@@ -3,5 +3,5 @@
         android:shape="rectangle">
     <corners android:topLeftRadius="5dp"
              android:topRightRadius="5dp"/>
-    <solid android:color="@android:color/white"/>
+    <solid android:color="?attr/fragment_background"/>
 </shape>

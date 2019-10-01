@@ -6,6 +6,39 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="bottomNavBackground">@color/bottomNavBackground</item>
+        <item name="fragment_background">@color/fragment_background</item>
+        <item name="article_divider_color">@color/article_divider_color</item>
+        <item name="source_text_color">@color/source_text_color</item>
+        <item name="bottom_nav_icon_tint_disable">@color/bottom_nav_icon_tint_disable</item>
+        <item name="bottom_nav_icon_tint_enable">@color/bottom_nav_icon_tint_enable</item>
+        <item name="article_text_color">@color/article_text_color</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <!-- Base Dark application theme. -->
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary_dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_dark</item>
+        <item name="colorAccent">@color/colorAccent_dark</item>
+        <item name="bottomNavBackground">@color/bottomNavBackground_dark</item>
+        <item name="fragment_background">@color/fragment_background_dark</item>
+        <item name="article_divider_color">@color/article_divider_color_dark</item>
+        <item name="source_text_color">@color/source_text_color_dark</item>
+        <item name="bottom_nav_icon_tint_disable">@color/bottom_nav_icon_tint_disable_dark</item>
+        <item name="bottom_nav_icon_tint_enable">@color/bottom_nav_icon_tint_enable_dark</item>
+        <item name="article_text_color">@color/article_text_color_dark</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <style name="BottomNavTheme" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_nav_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_selector</item>
+    </style>
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
 </resources>

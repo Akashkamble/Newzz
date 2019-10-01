@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--Normal theme-->
     <color name="colorPrimary">#4a148c</color>
     <color name="colorPrimaryDark">#4a148c</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="bottomNavBackground">@android:color/white</color>
+    <color name="fragment_background">@android:color/white</color>
+    <color name="article_divider_color">#DCDCDC</color>
+    <color name="source_text_color">#474646</color>
+    <color name="bottom_nav_icon_tint_disable">#5C5757</color>
+    <color name="bottom_nav_icon_tint_enable">#4a148c</color>
+    <color name="article_text_color">@android:color/black</color>
+
+
+    <!--Dark Theme-->
+    <color name="colorPrimary_dark">#121212</color>
+    <color name="colorPrimaryDark_dark">#121212</color>
+    <color name="colorAccent_dark">#D81B60</color>
+    <color name="bottomNavBackground_dark">#222222</color>
+    <color name="fragment_background_dark">#1E1E1E</color>
+    <color name="article_divider_color_dark">#2B2929</color>
+    <color name="source_text_color_dark">#868080</color>
+    <color name="bottom_nav_icon_tint_disable_dark">#5C5757</color>
+    <color name="bottom_nav_icon_tint_enable_dark">#B3DCDCDC</color>
+    <color name="article_text_color_dark">#B3DCDCDC</color>
+
+
+    <!--Common-->
+    <color name="toolbar">#E6FFFFFF</color>
+
 </resources>
