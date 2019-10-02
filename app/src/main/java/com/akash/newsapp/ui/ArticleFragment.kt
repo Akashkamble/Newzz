@@ -63,11 +63,7 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
                 is ArticleViewModel.ViewEvent.NavigateToBrowser -> CustomTabsUtils.launch(
                     activity!!,
                     it.url,
-                    if (NewsApplication.prefs!!.isDArk) {
-                        R.color.colorPrimary_dark
-                    } else {
-                        R.color.colorPrimary
-                    }
+                    NewsApplication.prefs!!.isDark
                 )
                 is ArticleViewModel.ViewEvent.ShowToast -> {
                     Toast.makeText(activity!!, it.toastMessage, Toast.LENGTH_LONG).show()
