@@ -4,7 +4,7 @@ import com.akash.newsapp.data.repositories.NewsRepository
 import com.akash.newsapp.data.repositories.NewsRepositoryImpl
 import com.akash.newsapp.network.NewsApiService
 import com.akash.newsapp.viewmodels.ArticleViewModel
-import org.koin.android.viewmodel.ext.koin.viewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val applicationModule = module {

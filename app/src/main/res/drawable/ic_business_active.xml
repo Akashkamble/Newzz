@@ -15,25 +15,25 @@
                 android:strokeWidth="1"/>
             <path
                 android:name="first_bar"
-                android:pathData="M 7.802 41.653 L 7.802 41.653 L 12.264 41.653 L 12.264 41.653 Z"
+                android:pathData="M 7.802 41.653 L 7.802 27.107 L 12.264 27.107 L 12.264 41.653 Z"
                 android:fillColor="#000000"
                 android:strokeColor="#000000"
                 android:strokeWidth="1"/>
             <path
                 android:name="second_bar"
-                android:pathData="M 16.066 41.488 L 16.066 41.488 L 20.364 41.488 L 20.364 41.488 Z"
+                android:pathData="M 16.066 41.488 L 16.066 21.984 L 20.364 21.984 L 20.364 41.488 Z"
                 android:fillColor="#000000"
                 android:strokeColor="#000000"
                 android:strokeWidth="1"/>
             <path
                 android:name="third_bar"
-                android:pathData="M 25.818 41.653 L 25.818 41.653 L 30.281 41.653 L 30.281 41.653 Z"
+                android:pathData="M 25.818 41.653 L 25.818 18.017 L 30.281 18.017 L 30.281 41.653 Z"
                 android:fillColor="#000000"
                 android:strokeColor="#000000"
                 android:strokeWidth="1"/>
             <path
                 android:name="fourth_bar"
-                android:pathData="M 34.826 41.653 L 34.826 41.653 L 39.454 41.653 L 39.454 41.653 Z"
+                android:pathData="M 34.826 41.653 L 34.826 10.909 L 39.454 10.909 L 39.454 41.653 Z"
                 android:fillColor="#000000"
                 android:strokeColor="#000000"
                 android:strokeWidth="1"/>
