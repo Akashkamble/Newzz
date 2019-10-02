@@ -21,7 +21,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ArticleFragment : androidx.fragment.app.Fragment() {
     private val TAG = ArticleFragment::class.java.simpleName
 
-    private lateinit var noConnectionView: TextView
     private lateinit var articleListView: androidx.recyclerview.widget.RecyclerView
     private val articleViewModel: ArticleViewModel by viewModel()
     private lateinit var binding: ArticleListViewBinding
@@ -37,16 +36,15 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
         val bundle = arguments
         category = bundle?.getString(KEY_CATEGORY)!!
         articleViewModel.getArticlesByCategory(category)
+        articleViewModel.category = category
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.article_list_view, container, false)
         binding.vm = articleViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        noConnectionView = binding.noConnection
         articleListView = binding.articleList
         refreshLayout = binding.refreshLayout
-        noConnectionView.text = "General Fragment"
         return binding.root
     }
 
