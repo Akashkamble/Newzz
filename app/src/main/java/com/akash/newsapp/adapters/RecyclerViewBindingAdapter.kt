@@ -31,7 +31,7 @@ class RecyclerViewBindingAdapter(var data: List<BaseRowModel>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         viewHolder.bind(data[i])
-        setAnimation(viewHolder.itemView, i)
+        setAnimation(viewHolder.itemView)
     }
 
     override fun getItemCount(): Int {
@@ -47,7 +47,7 @@ class RecyclerViewBindingAdapter(var data: List<BaseRowModel>) :
         super.onViewDetachedFromWindow(holder)
     }
 
-    private fun setAnimation(view: View, position: Int) {
+    private fun setAnimation(view: View) {
         val animation = AnimationUtils.loadAnimation(view.context, R.anim.item_animation_slide_from_right)
         view.startAnimation(animation)
     }

@@ -20,7 +20,7 @@
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary_dark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_dark</item>
-        <item name="colorAccent">@color/colorAccent_dark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="bottomNavBackground">@color/bottomNavBackground_dark</item>
         <item name="fragment_background">@color/fragment_background_dark</item>
         <item name="article_divider_color">@color/article_divider_color_dark</item>
