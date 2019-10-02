@@ -10,11 +10,12 @@
                 type="com.akash.newsapp.viewmodels.ArticleViewModel"/>
     </data>
 
+
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp">
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -22,28 +23,34 @@
                 android:background="@drawable/fragment_background">
 
             <TextView
+                    android:id="@+id/no_connection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/no_connection"
                     app:goneIfFalse="@{!vm.gotList}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/article_list"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:listData="@{vm.articleList}"
-                    app:goneIfFalse="@{vm.gotList}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:listitem="@layout/article_list_item"
-                    tools:itemCount="4"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/refreshLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/article_list"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:goneIfFalse="@{vm.gotList}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:listData="@{vm.articleList}"
+                        tools:itemCount="4"
+                        tools:listitem="@layout/article_list_item"/>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
+
 </layout>

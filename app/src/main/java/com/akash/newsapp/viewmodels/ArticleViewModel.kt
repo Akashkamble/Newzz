@@ -28,7 +28,7 @@ class ArticleViewModel constructor(private val newsRepository: NewsRepository) :
         it.size > 0
     }
 
-    fun getArticlesByCategory(category: String, page: Int = 1) {
+    fun getArticlesByCategory(category: String, page: Int = 1, isFromSwipeRefresh: Boolean = false) {
         val tempList = mutableListOf<BaseRowModel>()
         viewModelScope.launch {
             try {
@@ -40,10 +40,14 @@ class ArticleViewModel constructor(private val newsRepository: NewsRepository) :
                         }
                     }
                     _articleList.value = tempList
+                    if (isFromSwipeRefresh) {
+                        _event.value = Event(ViewEvent.FinishRefresh)
+                    }
                 }
 
             } catch (e: Exception) {
                 Log.e(TAG, "exception : ${e.localizedMessage}")
+                e.printStackTrace()
                 withContext(Dispatchers.Main) {
                     _event.value = Event(ViewEvent.ShowToast(e.localizedMessage))
                 }
@@ -58,6 +62,7 @@ class ArticleViewModel constructor(private val newsRepository: NewsRepository) :
     sealed class ViewEvent {
         data class NavigateToBrowser(val url: String) : ViewEvent()
         data class ShowToast(val toastMessage: String) : ViewEvent()
+        object FinishRefresh : ViewEvent()
     }
 
     override fun onCleared() {
