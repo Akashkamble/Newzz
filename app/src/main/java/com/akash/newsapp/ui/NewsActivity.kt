@@ -1,6 +1,7 @@
 package com.akash.newsapp.ui
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,6 +12,8 @@ import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.NewsCategoryAdapter
 import com.akash.newsapp.categoryconstants.Category
+import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
+import com.akash.newsapp.utils.PreferenceHelper.Companion.NOT_DARK_MODE
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.view.*
 
@@ -26,12 +29,38 @@ class NewsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val nightMode = NewsApplication.prefs!!.isDark
+
+
+
         setTheme(
-            if (NewsApplication.prefs!!.isDark) {
-                R.style.DarkTheme
-            } else {
-                R.style.AppTheme
+
+            when (nightMode) {
+                NOT_DARK_MODE ->
+                    R.style.AppTheme
+
+                IS_DARK_MODE ->
+                    R.style.DarkTheme
+                else -> {
+
+                    val currentNightMode =
+                        resources!!.configuration!!.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+                    when (currentNightMode) {
+                        Configuration.UI_MODE_NIGHT_YES -> {
+                            R.style.DarkTheme
+                        }
+                        Configuration.UI_MODE_NIGHT_NO -> {
+                            R.style.AppTheme
+                        }
+                        else -> R.style.AppTheme
+                    }
+                }
+
             }
+
+
         )
         setContentView(R.layout.activity_main)
         viewPager = findViewById(R.id.viewPager)
@@ -47,10 +76,16 @@ class NewsActivity : AppCompatActivity() {
         setUpViewPager()
         setTitleText()
         setUpThemeToggleImage()
-        viewPager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+        viewPager.addOnPageChangeListener(object :
+            ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
 
             override fun onPageSelected(position: Int) {
                 when (position) {
@@ -69,17 +104,21 @@ class NewsActivity : AppCompatActivity() {
     }
 
     private fun restartActivity() {
-        NewsApplication.prefs!!.isDark = !NewsApplication.prefs!!.isDark
+        if (NewsApplication.prefs!!.isDark == IS_DARK_MODE) {
+            NewsApplication.prefs!!.isDark = NOT_DARK_MODE
+        } else {
+            NewsApplication.prefs!!.isDark = IS_DARK_MODE
+        }
         NewsApplication.prefs!!.currentPage = viewPager.currentItem
         startActivity(Intent(this, NewsActivity::class.java))
         finish()
     }
 
     private fun setUpThemeToggleImage() {
-        if (NewsApplication.prefs!!.isDark) {
-            themeToggle.setImageResource(R.drawable.ic_light)
-        } else {
+        if (NewsApplication.prefs!!.isDark == IS_DARK_MODE) {
             themeToggle.setImageResource(R.drawable.ic_dark)
+        } else {
+            themeToggle.setImageResource(R.drawable.ic_light)
         }
     }
 
@@ -111,26 +150,27 @@ class NewsActivity : AppCompatActivity() {
     }
 
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.general -> {
-                viewPager.currentItem = 0
-                toolBarTitle.text = TITLE_GENERAL
-                return@OnNavigationItemSelectedListener true
+    private val mOnNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.general -> {
+                    viewPager.currentItem = 0
+                    toolBarTitle.text = TITLE_GENERAL
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.science -> {
+                    viewPager.currentItem = 1
+                    toolBarTitle.text = TITLE_BUSINESS
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.technology -> {
+                    viewPager.currentItem = 2
+                    toolBarTitle.text = TITLE_TECHNOLOGY
+                    return@OnNavigationItemSelectedListener true
+                }
             }
-            R.id.science -> {
-                viewPager.currentItem = 1
-                toolBarTitle.text = TITLE_BUSINESS
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.technology -> {
-                viewPager.currentItem = 2
-                toolBarTitle.text = TITLE_TECHNOLOGY
-                return@OnNavigationItemSelectedListener true
-            }
+            false
         }
-        false
-    }
 
     companion object {
         const val TITLE_GENERAL = "General"

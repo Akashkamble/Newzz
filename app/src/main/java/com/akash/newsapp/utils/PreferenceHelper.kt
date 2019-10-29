@@ -10,9 +10,9 @@ import android.content.SharedPreferences
 class PreferenceHelper(context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0)
 
-    var isDark: Boolean
-        get() = prefs.getBoolean(IS_DARK, false)
-        set(value) = prefs.edit().putBoolean(IS_DARK, value).apply()
+    var isDark: String
+        get() = prefs.getString(IS_DARK, UNDEFINED_DARK_MODE)!!
+        set(value) = prefs.edit().putString(IS_DARK, value).apply()
 
     var currentPage: Int
         get() = prefs.getInt(CURRENT_PAGE, 0)
@@ -22,5 +22,9 @@ class PreferenceHelper(context: Context) {
         const val PREFS_FILENAME = "com.akash.newsapp"
         const val IS_DARK = "is_dark"
         const val CURRENT_PAGE = "current-page"
+
+        const val IS_DARK_MODE = "is_dark_mode"
+        const val NOT_DARK_MODE = "not_dark_mode"
+        const val UNDEFINED_DARK_MODE = "undefined_dark_mode"
     }
 }
