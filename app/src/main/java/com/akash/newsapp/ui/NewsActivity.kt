@@ -18,7 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 class NewsActivity : AppCompatActivity() {
-    val TAG = NewsActivity::class.java.simpleName
 
     private lateinit var viewPagerAdapter: NewsCategoryAdapter
     private lateinit var viewPager: ViewPager
@@ -49,12 +48,19 @@ class NewsActivity : AppCompatActivity() {
 
                     when (currentNightMode) {
                         Configuration.UI_MODE_NIGHT_YES -> {
+                            NewsApplication.prefs!!.isDark = IS_DARK_MODE
                             R.style.DarkTheme
                         }
                         Configuration.UI_MODE_NIGHT_NO -> {
+                            NewsApplication.prefs!!.isDark = NOT_DARK_MODE
                             R.style.AppTheme
                         }
-                        else -> R.style.AppTheme
+                        else -> {
+                            NewsApplication.prefs!!.isDark = IS_DARK_MODE
+                            R.style.AppTheme
+                        }
+
+
                     }
                 }
 
