@@ -3,28 +3,22 @@ package com.akash.newsapp.ui
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
 import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
 import com.akash.newsapp.adapters.NewsCategoryAdapter
 import com.akash.newsapp.categoryconstants.Category
+import com.akash.newsapp.databinding.ActivityMainBinding
 import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 import com.akash.newsapp.utils.PreferenceHelper.Companion.NOT_DARK_MODE
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var viewPagerAdapter: NewsCategoryAdapter
-    private lateinit var viewPager: ViewPager
-    private lateinit var toolBar: Toolbar
-    private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var toolBarTitle: TextView
-    private lateinit var themeToggle: ImageView
+    private lateinit var mActivityMainBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,41 +62,40 @@ class NewsActivity : AppCompatActivity() {
 
 
         )
-        setContentView(R.layout.activity_main)
-        viewPager = findViewById(R.id.viewPager)
-        toolBar = findViewById(R.id.toolbar)
-        toolBarTitle = toolBar.toolbarTitle
-        bottomNavigationView = findViewById(R.id.bottomNavigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        themeToggle = toolBar.iv_theme_toggle
+        mActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        mActivityMainBinding.apply {
+            bottomNavigation.setOnNavigationItemSelectedListener(
+                mOnNavigationItemSelectedListener
+            )
 
-        themeToggle.setOnClickListener {
-            toggleTheme()
-        }
-        setUpViewPager()
-        setTitleText()
-        setUpThemeToggleImage()
-        viewPager.addOnPageChangeListener(object :
-            ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
+            ivThemeToggle.setOnClickListener {
+                toggleTheme()
             }
+            setUpViewPager()
+            setTitleText()
+            setUpThemeToggleImage()
+            viewPager.addOnPageChangeListener(object :
+                ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {}
 
-            override fun onPageSelected(position: Int) {
-                when (position) {
-                    0 -> toolBarTitle.text = TITLE_GENERAL
-                    1 -> toolBarTitle.text = TITLE_BUSINESS
-                    2 -> toolBarTitle.text = TITLE_TECHNOLOGY
-                    else -> toolBarTitle.text = TITLE_GENERAL
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
                 }
-                bottomNavigationView.menu.getItem(position).isChecked = true
-            }
-        })
+
+                override fun onPageSelected(position: Int) {
+                    when (position) {
+                        0 -> toolbarTitle.text = TITLE_GENERAL
+                        1 -> toolbarTitle.text = TITLE_BUSINESS
+                        2 -> toolbarTitle.text = TITLE_TECHNOLOGY
+                        else -> toolbarTitle.text = TITLE_GENERAL
+                    }
+                    bottomNavigation.menu.getItem(position).isChecked = true
+                }
+            })
+        }
     }
 
     private fun toggleTheme() {
@@ -115,37 +108,47 @@ class NewsActivity : AppCompatActivity() {
         } else {
             NewsApplication.prefs!!.isDark = IS_DARK_MODE
         }
-        NewsApplication.prefs!!.currentPage = viewPager.currentItem
+        NewsApplication.prefs!!.currentPage = mActivityMainBinding.viewPager.currentItem
         startActivity(Intent(this, NewsActivity::class.java))
         finish()
     }
 
     private fun setUpThemeToggleImage() {
-        if (NewsApplication.prefs!!.isDark == IS_DARK_MODE) {
-            themeToggle.setImageResource(R.drawable.ic_dark)
-        } else {
-            themeToggle.setImageResource(R.drawable.ic_light)
+        mActivityMainBinding.ivThemeToggle.apply {
+            if (NewsApplication.prefs!!.isDark == IS_DARK_MODE) {
+                setImageResource(R.drawable.ic_dark)
+            } else {
+                setImageResource(R.drawable.ic_light)
+            }
         }
     }
 
     private fun setTitleText() {
-        when (viewPager.currentItem) {
-            0 -> toolBarTitle.text = TITLE_GENERAL
-            1 -> toolBarTitle.text = TITLE_BUSINESS
-            2 -> toolBarTitle.text = TITLE_TECHNOLOGY
-        }
+        mActivityMainBinding.toolbarTitle.text =
+            when (mActivityMainBinding.viewPager.currentItem) {
+                0 -> TITLE_GENERAL
+                1 -> TITLE_BUSINESS
+                2 -> TITLE_TECHNOLOGY
+                else -> throw UnsupportedOperationException()
+            }
 
     }
 
     private fun setUpViewPager() {
         viewPagerAdapter = NewsCategoryAdapter(supportFragmentManager)
-        viewPagerAdapter.addFragment(ArticleFragment.newInstance(Category.GENERAL))
-        viewPagerAdapter.addFragment(ArticleFragment.newInstance(Category.BUSINESS))
-        viewPagerAdapter.addFragment(ArticleFragment.newInstance(Category.TECH))
-        viewPager.adapter = viewPagerAdapter
+        viewPagerAdapter.apply {
+            addFragment(ArticleFragment.newInstance(Category.GENERAL))
+            addFragment(ArticleFragment.newInstance(Category.BUSINESS))
+            addFragment(ArticleFragment.newInstance(Category.TECH))
+        }
         val storedPageId = NewsApplication.prefs!!.currentPage
-        viewPager.currentItem = storedPageId
-        bottomNavigationView.selectedItemId = getSelectedItemId(storedPageId)
+        mActivityMainBinding.apply {
+            viewPager.apply {
+                adapter = viewPagerAdapter
+                currentItem = storedPageId
+            }
+            bottomNavigation.selectedItemId = getSelectedItemId(storedPageId)
+        }
     }
 
     private fun getSelectedItemId(pageId: Int) = when (pageId) {
@@ -160,18 +163,18 @@ class NewsActivity : AppCompatActivity() {
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.general -> {
-                    viewPager.currentItem = 0
-                    toolBarTitle.text = TITLE_GENERAL
+                    mActivityMainBinding.viewPager.currentItem = 0
+                    mActivityMainBinding.toolbarTitle.text = TITLE_GENERAL
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.science -> {
-                    viewPager.currentItem = 1
-                    toolBarTitle.text = TITLE_BUSINESS
+                    mActivityMainBinding.viewPager.currentItem = 1
+                    mActivityMainBinding.toolbarTitle.text = TITLE_BUSINESS
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.technology -> {
-                    viewPager.currentItem = 2
-                    toolBarTitle.text = TITLE_TECHNOLOGY
+                    mActivityMainBinding.viewPager.currentItem = 2
+                    mActivityMainBinding.toolbarTitle.text = TITLE_TECHNOLOGY
                     return@OnNavigationItemSelectedListener true
                 }
             }

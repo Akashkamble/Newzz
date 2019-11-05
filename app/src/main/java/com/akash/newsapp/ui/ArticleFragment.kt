@@ -19,9 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 
 class ArticleFragment : androidx.fragment.app.Fragment() {
-    private val TAG = ArticleFragment::class.java.simpleName
 
-    private lateinit var articleListView: androidx.recyclerview.widget.RecyclerView
     private val articleViewModel: ArticleViewModel by viewModel()
     private lateinit var binding: ArticleListViewBinding
     private lateinit var refreshLayout: SwipeRefreshLayout
@@ -43,7 +41,6 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.article_list_view, container, false)
         binding.vm = articleViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        articleListView = binding.articleList
         refreshLayout = binding.refreshLayout
         return binding.root
     }
