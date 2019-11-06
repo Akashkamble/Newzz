@@ -18,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var viewPagerAdapter: NewsCategoryAdapter
-    private lateinit var mActivityMainBinding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,10 +62,10 @@ class NewsActivity : AppCompatActivity() {
 
 
         )
-        mActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        mActivityMainBinding.apply {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.apply {
             bottomNavigation.setOnNavigationItemSelectedListener(
-                mOnNavigationItemSelectedListener
+                onNavigationItemSelectedListener
             )
 
             ivThemeToggle.setOnClickListener {
@@ -108,13 +108,13 @@ class NewsActivity : AppCompatActivity() {
         } else {
             NewsApplication.prefs!!.isDark = IS_DARK_MODE
         }
-        NewsApplication.prefs!!.currentPage = mActivityMainBinding.viewPager.currentItem
+        NewsApplication.prefs!!.currentPage = binding.viewPager.currentItem
         startActivity(Intent(this, NewsActivity::class.java))
         finish()
     }
 
     private fun setUpThemeToggleImage() {
-        mActivityMainBinding.ivThemeToggle.apply {
+        binding.ivThemeToggle.apply {
             if (NewsApplication.prefs!!.isDark == IS_DARK_MODE) {
                 setImageResource(R.drawable.ic_dark)
             } else {
@@ -124,8 +124,8 @@ class NewsActivity : AppCompatActivity() {
     }
 
     private fun setTitleText() {
-        mActivityMainBinding.toolbarTitle.text =
-            when (mActivityMainBinding.viewPager.currentItem) {
+        binding.toolbarTitle.text =
+            when (binding.viewPager.currentItem) {
                 0 -> TITLE_GENERAL
                 1 -> TITLE_BUSINESS
                 2 -> TITLE_TECHNOLOGY
@@ -142,7 +142,7 @@ class NewsActivity : AppCompatActivity() {
             addFragment(ArticleFragment.newInstance(Category.TECH))
         }
         val storedPageId = NewsApplication.prefs!!.currentPage
-        mActivityMainBinding.apply {
+        binding.apply {
             viewPager.apply {
                 adapter = viewPagerAdapter
                 currentItem = storedPageId
@@ -159,22 +159,22 @@ class NewsActivity : AppCompatActivity() {
     }
 
 
-    private val mOnNavigationItemSelectedListener =
+    private val onNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.general -> {
-                    mActivityMainBinding.viewPager.currentItem = 0
-                    mActivityMainBinding.toolbarTitle.text = TITLE_GENERAL
+                    binding.viewPager.currentItem = 0
+                    binding.toolbarTitle.text = TITLE_GENERAL
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.science -> {
-                    mActivityMainBinding.viewPager.currentItem = 1
-                    mActivityMainBinding.toolbarTitle.text = TITLE_BUSINESS
+                    binding.viewPager.currentItem = 1
+                    binding.toolbarTitle.text = TITLE_BUSINESS
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.technology -> {
-                    mActivityMainBinding.viewPager.currentItem = 2
-                    mActivityMainBinding.toolbarTitle.text = TITLE_TECHNOLOGY
+                    binding.viewPager.currentItem = 2
+                    binding.toolbarTitle.text = TITLE_TECHNOLOGY
                     return@OnNavigationItemSelectedListener true
                 }
             }

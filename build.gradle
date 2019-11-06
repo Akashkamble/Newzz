@@ -6,7 +6,6 @@ buildscript {
         archLifecycleVersion = '2.1.0'
         coroutines = '1.0.1'
         koin = "1.0.2"
-        glide = "4.8.0"
     }
     repositories {
         google()
