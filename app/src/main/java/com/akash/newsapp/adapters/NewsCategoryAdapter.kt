@@ -15,7 +15,7 @@ class NewsCategoryAdapter(fragmentManager: androidx.fragment.app.FragmentManager
         return fragmentList.size
     }
 
-    fun addFragment(fragmant: androidx.fragment.app.Fragment) {
-        fragmentList.add(fragmant)
+    fun addFragment(fragment: androidx.fragment.app.Fragment) {
+        fragmentList.add(fragment)
     }
 }

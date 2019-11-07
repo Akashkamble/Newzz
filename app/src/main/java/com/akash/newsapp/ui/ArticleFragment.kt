@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -17,11 +16,10 @@ import com.akash.newsapp.databinding.ArticleListViewBinding
 import com.akash.newsapp.internals.CustomTabsUtils
 import com.akash.newsapp.viewmodels.ArticleViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 
 class ArticleFragment : androidx.fragment.app.Fragment() {
-    private val TAG = ArticleFragment::class.java.simpleName
 
-    private lateinit var articleListView: androidx.recyclerview.widget.RecyclerView
     private val articleViewModel: ArticleViewModel by viewModel()
     private lateinit var binding: ArticleListViewBinding
     private lateinit var refreshLayout: SwipeRefreshLayout
@@ -43,7 +41,6 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.article_list_view, container, false)
         binding.vm = articleViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        articleListView = binding.articleList
         refreshLayout = binding.refreshLayout
         return binding.root
     }
@@ -61,7 +58,7 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
                 is ArticleViewModel.ViewEvent.NavigateToBrowser -> CustomTabsUtils.launch(
                     activity!!,
                     it.url,
-                    NewsApplication.prefs!!.isDark
+                    isDark()
                 )
                 is ArticleViewModel.ViewEvent.ShowToast -> {
                     Toast.makeText(activity!!, it.toastMessage, Toast.LENGTH_LONG).show()
@@ -84,5 +81,9 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
 
         private const val KEY_CATEGORY = "CATEGORY"
     }
+
+    private fun isDark() = NewsApplication.prefs!!.isDark == IS_DARK_MODE
+
+
 }
 
