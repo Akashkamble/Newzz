@@ -63,11 +63,9 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.1'
 
-    // Network and Gson libraries
-    implementation 'com.google.code.gson:gson:2.8.5'
+    // Network and Moshi libraries
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.okhttp3:okhttp:3.12.6'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.6.2'
     implementation 'com.squareup.moshi:moshi:1.9.1'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.1'
