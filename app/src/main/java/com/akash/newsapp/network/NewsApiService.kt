@@ -5,7 +5,7 @@ import com.akash.newsapp.internals.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -41,7 +41,7 @@ interface NewsApiService {
             return Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl("https://newsapi.org/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create())
                 .build()
                 .create(NewsApiService::class.java)
         }
