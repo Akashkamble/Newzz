@@ -10,16 +10,17 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.startKoin
 
-class NewsApplication:Application() {
+class NewsApplication : Application() {
 
     companion object {
         var prefs: PreferenceHelper? = null
     }
+
     override fun onCreate() {
         prefs = PreferenceHelper(applicationContext)
         super.onCreate()
         AndroidThreeTen.init(this)
-        startKoin(this, listOf(applicationModule),loadPropertiesFromFile = true)
+        startKoin(this, listOf(applicationModule), loadPropertiesFromFile = true)
 
         Coil.setDefaultImageLoader {
             ImageLoader(this) {

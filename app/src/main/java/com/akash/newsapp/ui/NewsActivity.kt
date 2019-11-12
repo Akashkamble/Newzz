@@ -1,6 +1,5 @@
 package com.akash.newsapp.ui
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +22,45 @@ class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setAppTheme()
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.apply {
+            bottomNavigation.setOnNavigationItemSelectedListener(
+                onNavigationItemSelectedListener
+            )
+
+            ivThemeToggle.setOnClickListener {
+                toggleTheme()
+            }
+            setUpViewPager()
+            setTitleText()
+            setUpThemeToggleImage()
+            viewPager.addOnPageChangeListener(object :
+                ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {}
+
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                }
+
+                override fun onPageSelected(position: Int) {
+                    when (position) {
+                        0 -> toolbarTitle.text = TITLE_GENERAL
+                        1 -> toolbarTitle.text = TITLE_BUSINESS
+                        2 -> toolbarTitle.text = TITLE_TECHNOLOGY
+                        else -> toolbarTitle.text = TITLE_GENERAL
+                    }
+                    bottomNavigation.menu.getItem(position).isChecked = true
+                }
+            })
+        }
+    }
+
+    private fun setAppTheme() {
         val nightMode = NewsApplication.prefs!!.isDark
 
 
@@ -62,40 +100,6 @@ class NewsActivity : AppCompatActivity() {
 
 
         )
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.apply {
-            bottomNavigation.setOnNavigationItemSelectedListener(
-                onNavigationItemSelectedListener
-            )
-
-            ivThemeToggle.setOnClickListener {
-                toggleTheme()
-            }
-            setUpViewPager()
-            setTitleText()
-            setUpThemeToggleImage()
-            viewPager.addOnPageChangeListener(object :
-                ViewPager.OnPageChangeListener {
-                override fun onPageScrollStateChanged(state: Int) {}
-
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-                }
-
-                override fun onPageSelected(position: Int) {
-                    when (position) {
-                        0 -> toolbarTitle.text = TITLE_GENERAL
-                        1 -> toolbarTitle.text = TITLE_BUSINESS
-                        2 -> toolbarTitle.text = TITLE_TECHNOLOGY
-                        else -> toolbarTitle.text = TITLE_GENERAL
-                    }
-                    bottomNavigation.menu.getItem(position).isChecked = true
-                }
-            })
-        }
     }
 
     private fun toggleTheme() {
@@ -109,8 +113,7 @@ class NewsActivity : AppCompatActivity() {
             NewsApplication.prefs!!.isDark = IS_DARK_MODE
         }
         NewsApplication.prefs!!.currentPage = binding.viewPager.currentItem
-        startActivity(Intent(this, NewsActivity::class.java))
-        finish()
+        recreate()
     }
 
     private fun setUpThemeToggleImage() {
@@ -163,23 +166,42 @@ class NewsActivity : AppCompatActivity() {
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.general -> {
-                    binding.viewPager.currentItem = 0
-                    binding.toolbarTitle.text = TITLE_GENERAL
+                    if (binding.viewPager.currentItem == 0)
+                        scrollToTop(0)
+                    else
+                        binding.apply {
+                            viewPager.currentItem = 0
+                            toolbarTitle.text = TITLE_GENERAL
+                        }
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.science -> {
-                    binding.viewPager.currentItem = 1
-                    binding.toolbarTitle.text = TITLE_BUSINESS
+                    if (binding.viewPager.currentItem == 1)
+                        scrollToTop(1)
+                    else
+                        binding.apply {
+                            viewPager.currentItem = 1
+                            toolbarTitle.text = TITLE_BUSINESS
+                        }
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.technology -> {
-                    binding.viewPager.currentItem = 2
-                    binding.toolbarTitle.text = TITLE_TECHNOLOGY
+                    if (binding.viewPager.currentItem == 2)
+                        scrollToTop(2)
+                    else
+                        binding.apply {
+                            viewPager.currentItem = 2
+                            toolbarTitle.text = TITLE_TECHNOLOGY
+                        }
                     return@OnNavigationItemSelectedListener true
                 }
             }
             false
         }
+
+    private fun scrollToTop(position: Int) {
+        (viewPagerAdapter.getItem(position) as ArticleFragment).scrollToTop()
+    }
 
     companion object {
         const val TITLE_GENERAL = "General"

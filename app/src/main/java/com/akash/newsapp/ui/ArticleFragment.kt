@@ -14,9 +14,9 @@ import com.akash.newsapp.base.EventObserver
 import com.akash.newsapp.categoryconstants.Category
 import com.akash.newsapp.databinding.ArticleListViewBinding
 import com.akash.newsapp.internals.CustomTabsUtils
+import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 import com.akash.newsapp.viewmodels.ArticleViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 
 class ArticleFragment : androidx.fragment.app.Fragment() {
 
@@ -37,7 +37,11 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
         articleViewModel.category = category
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.article_list_view, container, false)
         binding.vm = articleViewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -84,6 +88,10 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
 
     private fun isDark() = NewsApplication.prefs!!.isDark == IS_DARK_MODE
 
+    fun scrollToTop() {
+        if (::binding.isInitialized)
+            binding.articleList.smoothScrollToPosition(0)
+    }
 
 }
 

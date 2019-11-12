@@ -12,14 +12,15 @@ import com.akash.newsapp.categoryconstants.Category
 import com.akash.newsapp.data.repositories.NewsRepository
 import kotlinx.coroutines.*
 
-class ArticleViewModel constructor(private val newsRepository: NewsRepository) : ViewModel(),ErrorState.ErrorStateRetryListener {
+class ArticleViewModel constructor(private val newsRepository: NewsRepository) : ViewModel(),
+    ErrorState.ErrorStateRetryListener {
     private val TAG = ArticleViewModel::class.java.simpleName
 
     private val job = SupervisorJob()
     private val viewModelScope = CoroutineScope(Dispatchers.Main) + job
     private val _event = MutableLiveData<Event<ViewEvent>>()
     val event = _event
-    var category : String = Category.GENERAL
+    var category: String = Category.GENERAL
 
     private val _errorState = ErrorState(this as ErrorState.ErrorStateRetryListener)
     val errorState = MutableLiveData<ErrorState>().apply { value = _errorState }
@@ -36,7 +37,11 @@ class ArticleViewModel constructor(private val newsRepository: NewsRepository) :
         it.size > 0
     }
 
-    fun getArticlesByCategory(category: String, page: Int = 1, isFromSwipeRefresh: Boolean = false) {
+    fun getArticlesByCategory(
+        category: String,
+        page: Int = 1,
+        isFromSwipeRefresh: Boolean = false
+    ) {
         val tempList = mutableListOf<BaseRowModel>()
         errorState.value = _errorState.copy(isLoading = true)
         viewModelScope.launch {
@@ -61,10 +66,10 @@ class ArticleViewModel constructor(private val newsRepository: NewsRepository) :
                 e.printStackTrace()
                 var errorMessage = e.localizedMessage
                 withContext(Dispatchers.Main) {
-                    if(e.localizedMessage.contains("Unable to resolve host")){
+                    if (e.localizedMessage.contains("Unable to resolve host")) {
                         errorMessage = "No internet connection"
                     }
-                    errorState.value = _errorState.copy(isError = true,errorMessage = errorMessage)
+                    errorState.value = _errorState.copy(isError = true, errorMessage = errorMessage)
                 }
             }
         }
