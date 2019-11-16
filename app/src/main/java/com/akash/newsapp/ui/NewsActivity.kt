@@ -54,6 +54,7 @@ class NewsActivity : AppCompatActivity() {
                         2 -> toolbarTitle.text = TITLE_TECHNOLOGY
                         else -> toolbarTitle.text = TITLE_GENERAL
                     }
+                    NewsApplication.prefs!!.currentPage = position
                     bottomNavigation.menu.getItem(position).isChecked = true
                 }
             })
