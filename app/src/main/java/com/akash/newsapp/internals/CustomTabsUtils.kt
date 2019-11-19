@@ -19,7 +19,11 @@ internal class CustomTabsUtils {
                             ContextCompat.getColor(activity.baseContext, R.color.colorPrimary_dark)
                         )
                         .setShowTitle(true)
-                        .setStartAnimations(activity.baseContext, R.anim.slide_in_right, R.anim.slide_out_left)
+                        .setStartAnimations(
+                            activity.baseContext,
+                            R.anim.slide_in_right,
+                            R.anim.slide_out_left
+                        )
                         .setExitAnimations(
                             activity.baseContext,
                             android.R.anim.slide_in_left,
@@ -35,7 +39,11 @@ internal class CustomTabsUtils {
                             ContextCompat.getColor(activity.baseContext, R.color.colorPrimary)
                         )
                         .setShowTitle(true)
-                        .setStartAnimations(activity.baseContext, R.anim.slide_in_right, R.anim.slide_out_left)
+                        .setStartAnimations(
+                            activity.baseContext,
+                            R.anim.slide_in_right,
+                            R.anim.slide_out_left
+                        )
                         .setExitAnimations(
                             activity.baseContext,
                             android.R.anim.slide_in_left,

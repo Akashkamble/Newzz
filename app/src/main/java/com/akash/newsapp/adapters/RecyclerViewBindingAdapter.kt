@@ -25,7 +25,8 @@ class RecyclerViewBindingAdapter(var data: List<BaseRowModel>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(viewGroup.context)
-        val dataViewBinding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, i, viewGroup, false)
+        val dataViewBinding =
+            DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, i, viewGroup, false)
         return ViewHolder(dataViewBinding)
     }
 
@@ -48,11 +49,13 @@ class RecyclerViewBindingAdapter(var data: List<BaseRowModel>) :
     }
 
     private fun setAnimation(view: View) {
-        val animation = AnimationUtils.loadAnimation(view.context, R.anim.item_animation_slide_from_right)
+        val animation =
+            AnimationUtils.loadAnimation(view.context, R.anim.item_animation_slide_from_right)
         view.startAnimation(animation)
     }
 
-    class ViewHolder(private val dataViewBinding: ViewDataBinding) : RecyclerView.ViewHolder(dataViewBinding.root) {
+    class ViewHolder(private val dataViewBinding: ViewDataBinding) :
+        RecyclerView.ViewHolder(dataViewBinding.root) {
 
         fun bind(dataModel: Any) {
             dataViewBinding.setVariable(BR.vm, dataModel)

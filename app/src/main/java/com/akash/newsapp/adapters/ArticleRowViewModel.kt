@@ -28,7 +28,8 @@ class ArticleRowViewModel(
     }
 
     private fun getDate(isoDate: String): String {
-        val time: ZonedDateTime = DateConverters.getDate(isoDate).withZoneSameLocal(ZoneId.systemDefault())
+        val time: ZonedDateTime =
+            DateConverters.getDate(isoDate).withZoneSameLocal(ZoneId.systemDefault())
         return "${time.dayOfMonth}/${time.monthValue}/${time.year}"
     }
 
