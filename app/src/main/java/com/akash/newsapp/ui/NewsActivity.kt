@@ -54,7 +54,7 @@ class NewsActivity : AppCompatActivity() {
                         2 -> toolbarTitle.text = TITLE_TECHNOLOGY
                         else -> toolbarTitle.text = TITLE_GENERAL
                     }
-                    NewsApplication.prefs!!.currentPage = position
+                    NewsApplication.prefs.currentPage = position
                     bottomNavigation.menu.getItem(position).isChecked = true
                 }
             })
@@ -62,7 +62,7 @@ class NewsActivity : AppCompatActivity() {
     }
 
     private fun setAppTheme() {
-        val nightMode = NewsApplication.prefs!!.isDark
+        val nightMode = NewsApplication.prefs.isDark
 
 
 
@@ -81,15 +81,15 @@ class NewsActivity : AppCompatActivity() {
 
                     when (currentNightMode) {
                         Configuration.UI_MODE_NIGHT_YES -> {
-                            NewsApplication.prefs!!.isDark = IS_DARK_MODE
+                            NewsApplication.prefs.isDark = IS_DARK_MODE
                             R.style.DarkTheme
                         }
                         Configuration.UI_MODE_NIGHT_NO -> {
-                            NewsApplication.prefs!!.isDark = NOT_DARK_MODE
+                            NewsApplication.prefs.isDark = NOT_DARK_MODE
                             R.style.AppTheme
                         }
                         else -> {
-                            NewsApplication.prefs!!.isDark = IS_DARK_MODE
+                            NewsApplication.prefs.isDark = IS_DARK_MODE
                             R.style.AppTheme
                         }
 
@@ -108,18 +108,18 @@ class NewsActivity : AppCompatActivity() {
     }
 
     private fun restartActivity() {
-        if (NewsApplication.prefs!!.isDark == IS_DARK_MODE) {
-            NewsApplication.prefs!!.isDark = NOT_DARK_MODE
+        if (NewsApplication.prefs.isDark == IS_DARK_MODE) {
+            NewsApplication.prefs.isDark = NOT_DARK_MODE
         } else {
-            NewsApplication.prefs!!.isDark = IS_DARK_MODE
+            NewsApplication.prefs.isDark = IS_DARK_MODE
         }
-        NewsApplication.prefs!!.currentPage = binding.viewPager.currentItem
+        NewsApplication.prefs.currentPage = binding.viewPager.currentItem
         recreate()
     }
 
     private fun setUpThemeToggleImage() {
         binding.ivThemeToggle.apply {
-            if (NewsApplication.prefs!!.isDark == IS_DARK_MODE) {
+            if (NewsApplication.prefs.isDark == IS_DARK_MODE) {
                 setImageResource(R.drawable.ic_dark)
             } else {
                 setImageResource(R.drawable.ic_light)
@@ -145,7 +145,7 @@ class NewsActivity : AppCompatActivity() {
             addFragment(ArticleFragment.newInstance(Category.BUSINESS))
             addFragment(ArticleFragment.newInstance(Category.TECH))
         }
-        val storedPageId = NewsApplication.prefs!!.currentPage
+        val storedPageId = NewsApplication.prefs.currentPage
         binding.apply {
             viewPager.apply {
                 adapter = viewPagerAdapter

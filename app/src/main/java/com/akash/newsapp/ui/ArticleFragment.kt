@@ -86,7 +86,7 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
         private const val KEY_CATEGORY = "CATEGORY"
     }
 
-    private fun isDark() = NewsApplication.prefs!!.isDark == IS_DARK_MODE
+    private fun isDark() = NewsApplication.prefs.isDark == IS_DARK_MODE
 
     fun scrollToTop() {
         if (::binding.isInitialized)
