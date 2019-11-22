@@ -1,6 +1,8 @@
 package com.akash.newsapp
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import coil.Coil
 import coil.ImageLoader
 import coil.util.CoilUtils
@@ -13,11 +15,20 @@ import org.koin.android.ext.android.startKoin
 class NewsApplication : Application() {
 
     companion object {
-        var prefs: PreferenceHelper? = null
+        lateinit var instances: NewsApplication
+        val prefs: PreferenceHelper by lazy { PreferenceHelper(instances) }
+
+
+        fun isNetworkConnected(): Boolean {
+            val connectivityManager =
+                instances.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+            return networkInfo != null && networkInfo.isConnected
+        }
     }
 
     override fun onCreate() {
-        prefs = PreferenceHelper(applicationContext)
+        instances = this
         super.onCreate()
         AndroidThreeTen.init(this)
         startKoin(this, listOf(applicationModule), loadPropertiesFromFile = true)
