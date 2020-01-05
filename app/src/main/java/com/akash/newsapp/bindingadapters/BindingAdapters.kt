@@ -9,6 +9,7 @@ import coil.api.load
 import coil.request.CachePolicy
 import com.akash.newsapp.adapters.RecyclerViewBindingAdapter
 import com.akash.newsapp.base.BaseRowModel
+import com.akash.newsapp.utils.GlimpseCoilTransformation
 
 /**
  * Created by Akash on 2019-09-07
@@ -16,6 +17,7 @@ import com.akash.newsapp.base.BaseRowModel
 @BindingAdapter("loadUrl")
 fun ImageView.loadUrl(url: String) {
     this.load(url) {
+        transformations(GlimpseCoilTransformation())
         memoryCachePolicy(CachePolicy.READ_ONLY)
     }
 }

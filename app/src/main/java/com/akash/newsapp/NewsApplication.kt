@@ -8,6 +8,7 @@ import coil.ImageLoader
 import coil.util.CoilUtils
 import com.akash.newsapp.utils.PreferenceHelper
 import com.jakewharton.threetenabp.AndroidThreeTen
+import glimpse.core.Glimpse
 import okhttp3.OkHttpClient
 
 class NewsApplication : Application() {
@@ -32,8 +33,8 @@ class NewsApplication : Application() {
                 }
             }
         }
+        Glimpse.init(this)
     }
-
     companion object {
         lateinit var instances: NewsApplication
         val prefs: PreferenceHelper by lazy { PreferenceHelper(instances) }
