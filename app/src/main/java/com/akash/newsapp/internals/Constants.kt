@@ -1,11 +1,10 @@
 package com.akash.newsapp.internals
 
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.getProperty
+import com.akash.newsapp.BuildConfig
 
-class Constants : KoinComponent {
+object Constants {
     val API_KEY: String
-        get() = getProperty("api_key")
+        get() = BuildConfig.API_KEY
     val COUNTRY: String
         get() = "in"
 }

@@ -16,8 +16,13 @@ android {
         versionName "1.0"
         resConfigs "en"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('newzz.properties').newDataInputStream())
+        def apiKey = properties.getProperty("api_key")
+        buildConfigField("String", "API_KEY", apiKey)
     }
     buildTypes {
+
         release {
             minifyEnabled true
             shrinkResources true
@@ -52,8 +57,10 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    // Koin for Android
-    api "org.koin:koin-androidx-viewmodel:$rootProject.koin"
+    // Dagger
+    def dagger_version = "2.24"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"

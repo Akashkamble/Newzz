@@ -20,7 +20,7 @@ interface NewsApiService {
     @GET("top-headlines?sortBy=publishedAt&pageSize=100")
     suspend fun getArticlesByCateGoryAsync(
         @Query("category") category: String,
-        @Query("country") country: String = Constants().COUNTRY
+        @Query("country") country: String = Constants.COUNTRY
     ): NewsResponse
 
 
@@ -55,7 +55,7 @@ interface NewsApiService {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("apiKey", Constants().API_KEY)
+                    .addQueryParameter("apiKey", Constants.API_KEY)
                     .build()
 
                 var request = chain.request()

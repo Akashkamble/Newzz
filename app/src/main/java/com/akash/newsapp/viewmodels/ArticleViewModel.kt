@@ -11,9 +11,11 @@ import com.akash.newsapp.base.Event
 import com.akash.newsapp.categoryconstants.Category
 import com.akash.newsapp.data.repositories.NewsRepository
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class ArticleViewModel constructor(private val newsRepository: NewsRepository) : ViewModel(),
-    ErrorState.ErrorStateRetryListener {
+class ArticleViewModel @Inject constructor(
+    private val newsRepository: NewsRepository
+) : ViewModel(), ErrorState.ErrorStateRetryListener {
     private val TAG = ArticleViewModel::class.java.simpleName
 
     private val job = SupervisorJob()

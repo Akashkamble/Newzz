@@ -7,32 +7,46 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
 import com.akash.newsapp.base.EventObserver
 import com.akash.newsapp.categoryconstants.Category
+import com.akash.newsapp.data.repositories.NewsRepository
 import com.akash.newsapp.databinding.ArticleListViewBinding
 import com.akash.newsapp.internals.CustomTabsUtils
 import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 import com.akash.newsapp.viewmodels.ArticleViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.akash.newsapp.viewmodels.ArticleViewModelFactory
+import javax.inject.Inject
 
 class ArticleFragment : androidx.fragment.app.Fragment() {
 
-    private val articleViewModel: ArticleViewModel by viewModel()
+    private lateinit var articleViewModel: ArticleViewModel
     private lateinit var binding: ArticleListViewBinding
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var category: String
+    private lateinit var factory: ArticleViewModelFactory
+
+    @Inject
+    lateinit var newsRepo: NewsRepository
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         /*getArticles in onAttach so that we will get article list only once.
         If getArticles invoked on onCreateView there will be one request every time when fragment is visible.*/
+        (requireActivity().application as NewsApplication)
+            .appComponent
+            .articleComponent()
+            .create()
+            .inject(this)
 
         val bundle = arguments
         category = bundle?.getString(KEY_CATEGORY)!!
+        factory = ArticleViewModelFactory(newsRepo)
+        articleViewModel = ViewModelProviders.of(this, factory)[ArticleViewModel::class.java]
         articleViewModel.getArticlesByCategory(category)
         articleViewModel.category = category
     }
