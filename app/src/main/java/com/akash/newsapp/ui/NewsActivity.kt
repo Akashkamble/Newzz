@@ -29,7 +29,6 @@ class NewsActivity : AppCompatActivity() {
             bottomNavigation.setOnNavigationItemSelectedListener(
                 onNavigationItemSelectedListener
             )
-
             ivThemeToggle.setOnClickListener {
                 toggleTheme()
             }
@@ -63,11 +62,7 @@ class NewsActivity : AppCompatActivity() {
 
     private fun setAppTheme() {
         val nightMode = NewsApplication.prefs.isDark
-
-
-
         setTheme(
-
             when (nightMode) {
                 NOT_DARK_MODE ->
                     R.style.AppTheme
@@ -75,10 +70,8 @@ class NewsActivity : AppCompatActivity() {
                 IS_DARK_MODE ->
                     R.style.DarkTheme
                 else -> {
-
                     val currentNightMode =
                         resources!!.configuration!!.uiMode and Configuration.UI_MODE_NIGHT_MASK
-
                     when (currentNightMode) {
                         Configuration.UI_MODE_NIGHT_YES -> {
                             NewsApplication.prefs.isDark = IS_DARK_MODE
@@ -92,14 +85,9 @@ class NewsActivity : AppCompatActivity() {
                             NewsApplication.prefs.isDark = IS_DARK_MODE
                             R.style.AppTheme
                         }
-
-
                     }
                 }
-
             }
-
-
         )
     }
 
