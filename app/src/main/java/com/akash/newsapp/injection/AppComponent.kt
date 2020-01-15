@@ -1,6 +1,7 @@
 package com.akash.newsapp.injection
 
 import android.content.Context
+import com.akash.newsapp.ui.ArticleFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -10,7 +11,7 @@ import javax.inject.Singleton
  */
 
 @Singleton
-@Component(modules = [NetworkModule::class, AppSubComponent::class])
+@Component(modules = [ArticleModule::class, ViewModelModule::class])
 interface AppComponent {
 
     // Factory to create instances of the AppComponent
@@ -20,5 +21,5 @@ interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 
-    fun articleComponent(): ArticleComponent.Factory
+    fun injectArticleFragment(fragment: ArticleFragment)
 }

@@ -12,7 +12,7 @@ import javax.inject.Singleton
  */
 
 @Module
-object NetworkModule {
+object ArticleModule {
 
     @JvmStatic
     @Provides
@@ -21,5 +21,6 @@ object NetworkModule {
 
     @JvmStatic
     @Provides
+    @Singleton
     fun provideNewsRepo(apiService: NewsApiService) : NewsRepository = NewsRepositoryImpl(apiService)
 }

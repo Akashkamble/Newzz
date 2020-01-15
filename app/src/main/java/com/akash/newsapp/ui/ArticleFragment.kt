@@ -13,12 +13,11 @@ import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
 import com.akash.newsapp.base.EventObserver
 import com.akash.newsapp.categoryconstants.Category
-import com.akash.newsapp.data.repositories.NewsRepository
 import com.akash.newsapp.databinding.ArticleListViewBinding
 import com.akash.newsapp.internals.CustomTabsUtils
 import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 import com.akash.newsapp.viewmodels.ArticleViewModel
-import com.akash.newsapp.viewmodels.ArticleViewModelFactory
+import com.akash.newsapp.viewmodels.ViewModelFactory
 import javax.inject.Inject
 
 class ArticleFragment : androidx.fragment.app.Fragment() {
@@ -27,10 +26,9 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
     private lateinit var binding: ArticleListViewBinding
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var category: String
-    private lateinit var factory: ArticleViewModelFactory
 
     @Inject
-    lateinit var newsRepo: NewsRepository
+    lateinit var factory: ViewModelFactory
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -39,13 +37,10 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
         If getArticles invoked on onCreateView there will be one request every time when fragment is visible.*/
         (requireActivity().application as NewsApplication)
             .appComponent
-            .articleComponent()
-            .create()
-            .inject(this)
+            .injectArticleFragment(this)
 
         val bundle = arguments
         category = bundle?.getString(KEY_CATEGORY)!!
-        factory = ArticleViewModelFactory(newsRepo)
         articleViewModel = ViewModelProviders.of(this, factory)[ArticleViewModel::class.java]
         articleViewModel.getArticlesByCategory(category)
         articleViewModel.category = category
