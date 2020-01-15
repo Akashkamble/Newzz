@@ -11,7 +11,7 @@
 
 - [Constraint Layout](https://developer.android.com/training/constraint-layout/) (UI)
 
-- [KOIN](https://insert-koin.io/) (Dependency Injection)
+- [Dagger 2](https://dagger.dev/) (Dependency Injection)
 
 - [LifeCycle Components](https://developer.android.com/topic/libraries/architecture/livedata) (ViewModel and LiveData)
 
@@ -23,6 +23,5 @@
 # Note
 This repo is missing api key for [newsapi](https://newsapi.org)
 get the api key from [newsapi](https://newsapi.org) and do following steps
-- Create package names **assets** in android/src/main
-- Create file named **koin.properties**
-- Add **api_key** property E.g api_key=54e494XXXXXXXXXXXXXXXXXXXXXXXXXX
+- Create file named **newzz.properties** in same direcory as your **local.properties**
+- Add **api_key** property E.g api_key="54e494XXXXXXXXXXXXXXXXXXXXXXXXXX"
