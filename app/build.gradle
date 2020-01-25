@@ -20,6 +20,9 @@ android {
         properties.load(project.rootProject.file('newzz.properties').newDataInputStream())
         def apiKey = properties.getProperty("api_key")
         buildConfigField("String", "API_KEY", apiKey)
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
     }
     buildTypes {
 
