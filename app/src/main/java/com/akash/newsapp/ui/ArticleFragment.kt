@@ -36,7 +36,9 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
 
         /*getArticles in onAttach so that we will get article list only once.
         If getArticles invoked on onCreateView there will be one request every time when fragment is visible.*/
-        DaggerArticleFragmentComponent.factory().create().injectArticleFragment(this)
+        DaggerArticleFragmentComponent.factory()
+            .create()
+            .injectArticleFragment(this)
 
         val bundle = arguments
         category = bundle?.getString(KEY_CATEGORY)!!

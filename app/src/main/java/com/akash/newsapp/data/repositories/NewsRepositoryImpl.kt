@@ -15,7 +15,7 @@ class NewsRepositoryImpl constructor(
     private val moshi: Moshi
 ) : NewsRepository {
 
-    override suspend fun getArticlesByCategoryAsync(category: String): Result<NewsResponse> {
+    override suspend fun getArticlesByCategoryAsync(category: String, page: Int): Result<NewsResponse> {
         try {
             val response = newsApiService.getArticlesByCateGoryAsync(category)
             return if (response.isSuccessful) {

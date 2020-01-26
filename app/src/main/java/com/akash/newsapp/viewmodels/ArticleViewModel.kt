@@ -16,7 +16,6 @@ import javax.inject.Inject
 class ArticleViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ) : ViewModel(), ErrorState.ErrorStateRetryListener {
-    private val TAG = ArticleViewModel::class.java.simpleName
 
     private val job = SupervisorJob()
     private val viewModelScope = CoroutineScope(Dispatchers.Main) + job
@@ -39,27 +38,25 @@ class ArticleViewModel @Inject constructor(
         it.size > 0
     }
 
-    fun getArticlesByCategory(
-        category: String,
-        page: Int = 1,
-        isFromSwipeRefresh: Boolean = false
-    ) {
-        val tempList = mutableListOf<BaseRowModel>()
-        errorState.value = _errorState.copy(isLoading = true)
-        viewModelScope.launch {
-            getArticleListOrErrorMessage(category, tempList, isFromSwipeRefresh)
-        }
+    override fun onRetry() {
+        getArticlesByCategory(category)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 
     private suspend fun getArticleListOrErrorMessage(
         category: String,
+        page: Int,
         tempList: MutableList<BaseRowModel>,
         isFromSwipeRefresh: Boolean
     ) {
-        when (val result = newsRepository.getArticlesByCategoryAsync(category)) {
+        when (val result = newsRepository.getArticlesByCategoryAsync(category, page)) {
             is Result.Success -> {
                 withContext(Dispatchers.Main) {
-                    result.data?.articles?.toMutableList()?.forEach { article ->
+                    result.data.articles.toMutableList().forEach { article ->
                         article.urlToImage?.let {
                             tempList.add(ArticleRowViewModel(article, this@ArticleViewModel))
                         }
@@ -84,23 +81,26 @@ class ArticleViewModel @Inject constructor(
         }
     }
 
-    fun openArticleInBrowser(articleRowViewModel: ArticleRowViewModel) {
-        _event.value = Event(ViewEvent.NavigateToBrowser(articleRowViewModel.url))
+    fun getArticlesByCategory(
+        category: String,
+        page: Int = 1,
+        isFromSwipeRefresh: Boolean = false
+    ) {
+        val tempList = mutableListOf<BaseRowModel>()
+        errorState.value = _errorState.copy(isLoading = true)
+        viewModelScope.launch {
+            getArticleListOrErrorMessage(category, page, tempList, isFromSwipeRefresh)
+        }
     }
 
-    override fun onRetry() {
-        getArticlesByCategory(category)
+    fun openArticleInBrowser(articleRowViewModel: ArticleRowViewModel) {
+        _event.value = Event(ViewEvent.NavigateToBrowser(articleRowViewModel.url))
     }
 
     sealed class ViewEvent {
         data class NavigateToBrowser(val url: String) : ViewEvent()
         data class ShowToast(val toastMessage: String) : ViewEvent()
         object FinishRefresh : ViewEvent()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
     }
 
 }
