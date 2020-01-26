@@ -18,6 +18,7 @@ class NewsApplication : Application() {
         super.onCreate()
         AndroidThreeTen.init(this)
         coilSetUp()
+        Glimpse.init(this)
     }
 
     private fun coilSetUp() {
@@ -33,7 +34,6 @@ class NewsApplication : Application() {
                 }
             }
         }
-        Glimpse.init(this)
     }
     companion object {
         lateinit var instances: NewsApplication
