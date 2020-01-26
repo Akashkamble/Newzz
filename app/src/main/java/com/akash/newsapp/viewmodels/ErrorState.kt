@@ -7,6 +7,7 @@ data class ErrorState(
     val listener: ErrorStateRetryListener,
     val isLoading: Boolean = false,
     val isError: Boolean = false,
+    val showRetry: Boolean = false,
     val errorMessage: String? = ""
 ) {
     fun onRetry() {

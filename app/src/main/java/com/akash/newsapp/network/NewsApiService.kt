@@ -7,6 +7,7 @@ import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -21,7 +22,7 @@ interface NewsApiService {
     suspend fun getArticlesByCateGoryAsync(
         @Query("category") category: String,
         @Query("country") country: String = Constants.COUNTRY
-    ): NewsResponse
+    ): Response<NewsResponse>
 
 
     companion object {

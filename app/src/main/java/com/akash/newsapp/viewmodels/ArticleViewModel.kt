@@ -1,6 +1,5 @@
 package com.akash.newsapp.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -10,6 +9,7 @@ import com.akash.newsapp.base.BaseRowModel
 import com.akash.newsapp.base.Event
 import com.akash.newsapp.categoryconstants.Category
 import com.akash.newsapp.data.repositories.NewsRepository
+import com.akash.newsapp.internals.Result
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -47,10 +47,19 @@ class ArticleViewModel @Inject constructor(
         val tempList = mutableListOf<BaseRowModel>()
         errorState.value = _errorState.copy(isLoading = true)
         viewModelScope.launch {
-            try {
-                val response = newsRepository.getArticlesByCategoryAsync(category)
+            getArticleListOrErrorMessage(category, tempList, isFromSwipeRefresh)
+        }
+    }
+
+    private suspend fun getArticleListOrErrorMessage(
+        category: String,
+        tempList: MutableList<BaseRowModel>,
+        isFromSwipeRefresh: Boolean
+    ) {
+        when (val result = newsRepository.getArticlesByCategoryAsync(category)) {
+            is Result.Success -> {
                 withContext(Dispatchers.Main) {
-                    response.articles.toMutableList().forEach { article ->
+                    result.data?.articles?.toMutableList()?.forEach { article ->
                         article.urlToImage?.let {
                             tempList.add(ArticleRowViewModel(article, this@ArticleViewModel))
                         }
@@ -62,16 +71,14 @@ class ArticleViewModel @Inject constructor(
                     errorState.value = _errorState.copy(isLoading = false)
                     _isLoading.value = false
                 }
-
-            } catch (e: Exception) {
-                Log.e(TAG, "exception : ${e.localizedMessage}")
-                e.printStackTrace()
-                var errorMessage = e.localizedMessage
+            }
+            is Result.Error -> {
                 withContext(Dispatchers.Main) {
-                    if (e.localizedMessage.contains("Unable to resolve host")) {
-                        errorMessage = "No internet connection"
-                    }
-                    errorState.value = _errorState.copy(isError = true, errorMessage = errorMessage)
+                    errorState.value = _errorState.copy(
+                        isError = true,
+                        errorMessage = result.errorMessage,
+                        showRetry = result.showRetry
+                    )
                 }
             }
         }

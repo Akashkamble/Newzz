@@ -14,6 +14,7 @@ import com.akash.newsapp.R
 import com.akash.newsapp.base.EventObserver
 import com.akash.newsapp.categoryconstants.Category
 import com.akash.newsapp.databinding.ArticleListViewBinding
+import com.akash.newsapp.injection.DaggerArticleFragmentComponent
 import com.akash.newsapp.internals.CustomTabsUtils
 import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 import com.akash.newsapp.viewmodels.ArticleViewModel
@@ -35,9 +36,7 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
 
         /*getArticles in onAttach so that we will get article list only once.
         If getArticles invoked on onCreateView there will be one request every time when fragment is visible.*/
-        (requireActivity().application as NewsApplication)
-            .appComponent
-            .injectArticleFragment(this)
+        DaggerArticleFragmentComponent.factory().create().injectArticleFragment(this)
 
         val bundle = arguments
         category = bundle?.getString(KEY_CATEGORY)!!

@@ -3,6 +3,7 @@ package com.akash.newsapp.injection
 import com.akash.newsapp.data.repositories.NewsRepository
 import com.akash.newsapp.data.repositories.NewsRepositoryImpl
 import com.akash.newsapp.network.NewsApiService
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -22,5 +23,13 @@ object ArticleModule {
     @JvmStatic
     @Provides
     @Singleton
-    fun provideNewsRepo(apiService: NewsApiService) : NewsRepository = NewsRepositoryImpl(apiService)
+    fun provideNewsRepo(
+        apiService: NewsApiService,
+        moshi: Moshi
+    ) : NewsRepository = NewsRepositoryImpl(apiService,moshi)
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideMoshi() : Moshi = Moshi.Builder().build()
 }
