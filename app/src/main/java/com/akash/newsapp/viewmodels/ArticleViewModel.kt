@@ -1,6 +1,5 @@
 package com.akash.newsapp.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -10,13 +9,13 @@ import com.akash.newsapp.base.BaseRowModel
 import com.akash.newsapp.base.Event
 import com.akash.newsapp.categoryconstants.Category
 import com.akash.newsapp.data.repositories.NewsRepository
+import com.akash.newsapp.internals.Result
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class ArticleViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ) : ViewModel(), ErrorState.ErrorStateRetryListener {
-    private val TAG = ArticleViewModel::class.java.simpleName
 
     private val job = SupervisorJob()
     private val viewModelScope = CoroutineScope(Dispatchers.Main) + job
@@ -39,18 +38,25 @@ class ArticleViewModel @Inject constructor(
         it.size > 0
     }
 
-    fun getArticlesByCategory(
+    override fun onRetry() {
+        getArticlesByCategory(category)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
+    }
+
+    private suspend fun getArticleListOrErrorMessage(
         category: String,
-        page: Int = 1,
-        isFromSwipeRefresh: Boolean = false
+        page: Int,
+        tempList: MutableList<BaseRowModel>,
+        isFromSwipeRefresh: Boolean
     ) {
-        val tempList = mutableListOf<BaseRowModel>()
-        errorState.value = _errorState.copy(isLoading = true)
-        viewModelScope.launch {
-            try {
-                val response = newsRepository.getArticlesByCategoryAsync(category)
+        when (val result = newsRepository.getArticlesByCategoryAsync(category, page)) {
+            is Result.Success -> {
                 withContext(Dispatchers.Main) {
-                    response.articles.toMutableList().forEach { article ->
+                    result.data.articles.toMutableList().forEach { article ->
                         article.urlToImage?.let {
                             tempList.add(ArticleRowViewModel(article, this@ArticleViewModel))
                         }
@@ -62,18 +68,28 @@ class ArticleViewModel @Inject constructor(
                     errorState.value = _errorState.copy(isLoading = false)
                     _isLoading.value = false
                 }
-
-            } catch (e: Exception) {
-                Log.e(TAG, "exception : ${e.localizedMessage}")
-                e.printStackTrace()
-                var errorMessage = e.localizedMessage
+            }
+            is Result.Error -> {
                 withContext(Dispatchers.Main) {
-                    if (e.localizedMessage.contains("Unable to resolve host")) {
-                        errorMessage = "No internet connection"
-                    }
-                    errorState.value = _errorState.copy(isError = true, errorMessage = errorMessage)
+                    errorState.value = _errorState.copy(
+                        isError = true,
+                        errorMessage = result.errorMessage,
+                        showRetry = result.showRetry
+                    )
                 }
             }
+        }
+    }
+
+    fun getArticlesByCategory(
+        category: String,
+        page: Int = 1,
+        isFromSwipeRefresh: Boolean = false
+    ) {
+        val tempList = mutableListOf<BaseRowModel>()
+        errorState.value = _errorState.copy(isLoading = true)
+        viewModelScope.launch {
+            getArticleListOrErrorMessage(category, page, tempList, isFromSwipeRefresh)
         }
     }
 
@@ -81,19 +97,10 @@ class ArticleViewModel @Inject constructor(
         _event.value = Event(ViewEvent.NavigateToBrowser(articleRowViewModel.url))
     }
 
-    override fun onRetry() {
-        getArticlesByCategory(category)
-    }
-
     sealed class ViewEvent {
         data class NavigateToBrowser(val url: String) : ViewEvent()
         data class ShowToast(val toastMessage: String) : ViewEvent()
         object FinishRefresh : ViewEvent()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
     }
 
 }

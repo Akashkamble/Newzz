@@ -45,7 +45,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="@{() ->errorState.onRetry()}"
-                app:goneIfFalse="@{!errorState.isLoading &amp;&amp; errorState.isError}"
+                app:goneIfFalse="@{!errorState.isLoading &amp;&amp; errorState.isError &amp;&amp; errorState.showRetry}"
                 android:foreground="?attr/selectableItemBackground"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"

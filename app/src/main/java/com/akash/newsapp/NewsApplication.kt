@@ -6,27 +6,20 @@ import android.net.ConnectivityManager
 import coil.Coil
 import coil.ImageLoader
 import coil.util.CoilUtils
-import com.akash.newsapp.injection.AppComponent
-import com.akash.newsapp.injection.DaggerAppComponent
 import com.akash.newsapp.utils.PreferenceHelper
 import com.jakewharton.threetenabp.AndroidThreeTen
 import okhttp3.OkHttpClient
 
 class NewsApplication : Application() {
 
-    // Instance of the AppComponent that will be used by all the Activities in the project
-    val appComponent: AppComponent by lazy {
-        initializeComponent()
-    }
-
-    private fun initializeComponent(): AppComponent {
-        return DaggerAppComponent.factory().create(this)
-    }
-
     override fun onCreate() {
         instances = this
         super.onCreate()
         AndroidThreeTen.init(this)
+        coilSetUp()
+    }
+
+    private fun coilSetUp() {
         Coil.setDefaultImageLoader {
             ImageLoader(this) {
                 crossfade(true)
