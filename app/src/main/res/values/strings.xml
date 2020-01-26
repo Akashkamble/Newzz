@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Newzz</string>
     <string name="try_again">Retry</string>
+    <string name="article_image">Article Image</string>
 </resources>

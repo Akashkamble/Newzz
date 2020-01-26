@@ -7,7 +7,7 @@
 
         <variable
                 name="vm"
-                type="com.akash.newsapp.adapters.ArticleRowViewModel"/>
+                type="com.akash.newsapp.viewmodels.ArticleRowViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,6 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{() -> vm.onRowClicked()}">
-
 
         <TextView
                 android:id="@+id/source"
@@ -32,8 +31,9 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0"
-                tools:text="Timesnownews"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Timesnownews" />
 
         <ImageView
                 android:id="@+id/articleImage"
@@ -41,11 +41,15 @@
                 android:layout_height="95dp"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="@+id/title"
+                app:cornerRadius="@{5.0f}"
+                app:layout_constraintBottom_toBottomOf="@+id/publishedDate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/title"
-                app:loadUrl="@{vm.articleImageUrl}" tools:srcCompat="@tools:sample/avatars"/>
+                app:layout_constraintTop_toTopOf="@id/source"
+                app:layout_constraintVertical_bias="0.5"
+                app:loadUrl="@{vm.articleImageUrl}"
+                android:contentDescription="@string/article_image"
+                tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
                 android:id="@+id/title"
@@ -67,33 +71,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/source"
                 app:layout_constraintVertical_bias="0.0"
-                tools:text="India vs New Zealand 5th ODI Preview: After Hamilton debacle, India look to end tour on high - The Indian Express"/>
+                tools:text="India vs New Zealand 5th ODI Preview: After Hamilton debacle, India look to end tour on high - The Indian Express" />
 
         <TextView
                 android:id="@+id/publishedDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@{vm.date}"
                 android:textColor="?attr/source_text_color"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title" tools:text="@tools:sample/date/ddmmyy"/>
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="?attr/article_divider_color"
-                app:layout_constraintTop_toBottomOf="@id/publishedDate"/>
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintVertical_bias="0"
+                tools:text="@tools:sample/date/ddmmyy" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.7"/>
+                app:layout_constraintGuide_percent="0.7" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

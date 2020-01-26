@@ -1,8 +1,8 @@
-package com.akash.newsapp.network
+package com.akash.newsapp.data.network
 
 import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.data.response.NewsResponse
-import com.akash.newsapp.internals.Constants
+import com.akash.newsapp.base.constants.Constants
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor

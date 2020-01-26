@@ -2,7 +2,7 @@ package com.akash.newsapp.injection
 
 import com.akash.newsapp.data.repositories.NewsRepository
 import com.akash.newsapp.data.repositories.NewsRepositoryImpl
-import com.akash.newsapp.network.NewsApiService
+import com.akash.newsapp.data.network.NewsApiService
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides

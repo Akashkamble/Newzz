@@ -1,10 +1,10 @@
-package com.akash.newsapp.categoryconstants
+package com.akash.newsapp.base.constants
 
 import androidx.annotation.StringDef
 
 
 @Retention(AnnotationRetention.SOURCE)
-@StringDef(value = arrayOf(Category.GENERAL, Category.BUSINESS, Category.TECH))
+@StringDef(value = [Category.GENERAL, Category.BUSINESS, Category.TECH])
 internal annotation class Category {
     companion object {
         const val GENERAL = "general"

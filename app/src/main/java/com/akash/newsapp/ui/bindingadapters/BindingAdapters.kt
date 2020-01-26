@@ -1,5 +1,6 @@
-package com.akash.newsapp.bindingadapters
+package com.akash.newsapp.ui.bindingadapters
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -7,23 +8,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.request.CachePolicy
-import com.akash.newsapp.adapters.RecyclerViewBindingAdapter
+import coil.transform.RoundedCornersTransformation
+import com.akash.newsapp.ui.adapters.RecyclerViewBindingAdapter
 import com.akash.newsapp.base.BaseRowModel
-import com.akash.newsapp.utils.GlimpseCoilTransformation
+import com.akash.newsapp.ui.coiltransformation.GlimpseCoilTransformation
+import com.akash.newsapp.utils.extensions.toPx
+import com.akash.newsapp.ui.itemdecoration.DividerItemDecoration
 
 /**
  * Created by Akash on 2019-09-07
  */
-@BindingAdapter("loadUrl")
-fun ImageView.loadUrl(url: String) {
+@BindingAdapter("loadUrl", "cornerRadius", requireAll = true)
+fun ImageView.loadUrl(url: String, radius: Float) {
     this.load(url) {
-        transformations(GlimpseCoilTransformation())
+        transformations(GlimpseCoilTransformation(), RoundedCornersTransformation(radius.toPx()))
         memoryCachePolicy(CachePolicy.READ_ONLY)
     }
 }
 
-@BindingAdapter("listData")
-fun RecyclerView.setRowLayoutData(listData: List<BaseRowModel>?) {
+@BindingAdapter("listData", "setDecorator", requireAll = false)
+fun RecyclerView.setRowLayoutData(listData: List<BaseRowModel>?, decorator: Drawable?) {
 
     if (listData == null)
         return
@@ -33,6 +37,9 @@ fun RecyclerView.setRowLayoutData(listData: List<BaseRowModel>?) {
     if (adapter == null) {
         adapter = RecyclerViewBindingAdapter(listData)
         this.adapter = adapter
+        decorator?.let {
+            this.addItemDecoration(DividerItemDecoration(it))
+        }
         this.setHasFixedSize(false)
         this.layoutManager = LinearLayoutManager(this.context)
         this.isNestedScrollingEnabled = false

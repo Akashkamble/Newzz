@@ -1,7 +1,7 @@
 package com.akash.newsapp.data.repositories
 
 import com.akash.newsapp.data.response.NewsResponse
-import com.akash.newsapp.internals.Result
+import com.akash.newsapp.base.Result
 
 interface NewsRepository {
     suspend fun getArticlesByCategoryAsync(category: String, page: Int): Result<NewsResponse>

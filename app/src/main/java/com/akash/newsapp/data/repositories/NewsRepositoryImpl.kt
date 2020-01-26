@@ -2,8 +2,8 @@ package com.akash.newsapp.data.repositories
 
 import com.akash.newsapp.data.response.NewsError
 import com.akash.newsapp.data.response.NewsResponse
-import com.akash.newsapp.network.NewsApiService
-import com.akash.newsapp.internals.Result
+import com.akash.newsapp.data.network.NewsApiService
+import com.akash.newsapp.base.Result
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers

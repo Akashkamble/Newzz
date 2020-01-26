@@ -1,4 +1,4 @@
-package com.akash.newsapp.utils
+package com.akash.newsapp.ui.coiltransformation
 
 import android.graphics.Bitmap
 import coil.bitmappool.BitmapPool
@@ -30,8 +30,6 @@ class GlimpseCoilTransformation : Transformation {
 
         return outBitmap
     }
-
-
 }
 
 
