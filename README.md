@@ -19,6 +19,10 @@
 
 - [Retrofit](https://square.github.io/retrofit/) (Networking)
 
+- [Glimpse-Android](https://github.com/the-super-toys/glimpse-android) (A content-aware cropping library for Android)
+
+- [Moshi](https://github.com/square/moshi) (Kotlin JSON library for Android from Square)
+
 
 # Note
 This repo is missing api key for [newsapi](https://newsapi.org)
