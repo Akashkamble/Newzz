@@ -12,10 +12,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
 import com.akash.newsapp.base.EventObserver
-import com.akash.newsapp.categoryconstants.Category
+import com.akash.newsapp.base.constants.Category
 import com.akash.newsapp.databinding.ArticleListViewBinding
 import com.akash.newsapp.injection.DaggerArticleFragmentComponent
-import com.akash.newsapp.internals.CustomTabsUtils
+import com.akash.newsapp.utils.CustomTabsUtils
 import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 import com.akash.newsapp.viewmodels.ArticleViewModel
 import com.akash.newsapp.viewmodels.ViewModelFactory

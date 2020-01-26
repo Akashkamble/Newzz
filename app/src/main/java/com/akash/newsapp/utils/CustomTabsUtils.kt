@@ -1,4 +1,4 @@
-package com.akash.newsapp.internals
+package com.akash.newsapp.utils
 
 import android.app.Activity
 import android.net.Uri

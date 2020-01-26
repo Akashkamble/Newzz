@@ -39,6 +39,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:listData="@{vm.articleList}"
+                        app:setDecorator="@{@drawable/article_divider}"
                         tools:itemCount="4"
                         tools:listitem="@layout/article_list_item"/>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

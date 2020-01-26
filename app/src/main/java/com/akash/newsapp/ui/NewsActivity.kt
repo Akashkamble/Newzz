@@ -7,8 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
 import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
-import com.akash.newsapp.adapters.NewsCategoryAdapter
-import com.akash.newsapp.categoryconstants.Category
+import com.akash.newsapp.ui.adapters.NewsCategoryAdapter
+import com.akash.newsapp.base.constants.Category
 import com.akash.newsapp.databinding.ActivityMainBinding
 import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 import com.akash.newsapp.utils.PreferenceHelper.Companion.NOT_DARK_MODE

@@ -1,4 +1,4 @@
-package com.akash.newsapp.internals
+package com.akash.newsapp.base.constants
 
 import com.akash.newsapp.BuildConfig
 

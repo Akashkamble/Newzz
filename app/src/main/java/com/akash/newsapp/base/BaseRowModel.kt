@@ -7,7 +7,6 @@ abstract class BaseRowModel {
 
     val TAG: String = javaClass.name
 
-
     var layoutID: Int = 0
         protected set
 

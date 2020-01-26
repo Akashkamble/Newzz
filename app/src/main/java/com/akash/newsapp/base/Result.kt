@@ -1,4 +1,4 @@
-package com.akash.newsapp.internals
+package com.akash.newsapp.base
 
 /**
  * Created by Akash on 2020-01-26

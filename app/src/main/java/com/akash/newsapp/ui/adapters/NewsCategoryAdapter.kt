@@ -1,4 +1,4 @@
-package com.akash.newsapp.adapters
+package com.akash.newsapp.ui.adapters
 
 class NewsCategoryAdapter(fragmentManager: androidx.fragment.app.FragmentManager) :
     androidx.fragment.app.FragmentPagerAdapter(

@@ -1,11 +1,10 @@
-package com.akash.newsapp.adapters
+package com.akash.newsapp.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import com.akash.newsapp.R
 import com.akash.newsapp.base.BaseRowModel
 import com.akash.newsapp.data.converters.DateConverters
 import com.akash.newsapp.data.response.NewsArticle
-import com.akash.newsapp.viewmodels.ArticleViewModel
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 

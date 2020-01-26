@@ -1,4 +1,4 @@
-package com.akash.newsapp.adapters
+package com.akash.newsapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
