@@ -11,9 +11,9 @@ import coil.request.CachePolicy
 import coil.transform.RoundedCornersTransformation
 import com.akash.newsapp.ui.adapters.RecyclerViewBindingAdapter
 import com.akash.newsapp.base.BaseRowModel
-import com.akash.newsapp.ui.coiltransformation.GlimpseCoilTransformation
 import com.akash.newsapp.utils.extensions.toPx
 import com.akash.newsapp.ui.itemdecoration.DividerItemDecoration
+import glimpse.coil.GlimpseTransformation
 
 /**
  * Created by Akash on 2019-09-07
@@ -21,7 +21,7 @@ import com.akash.newsapp.ui.itemdecoration.DividerItemDecoration
 @BindingAdapter("loadUrl", "cornerRadius", requireAll = true)
 fun ImageView.loadUrl(url: String, radius: Float) {
     this.load(url) {
-        transformations(GlimpseCoilTransformation(), RoundedCornersTransformation(radius.toPx()))
+        transformations(GlimpseTransformation(), RoundedCornersTransformation(radius.toPx()))
         memoryCachePolicy(CachePolicy.READ_ONLY)
     }
 }
