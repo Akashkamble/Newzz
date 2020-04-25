@@ -6,9 +6,9 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.akash.newsapp.base.BaseRowModel
 import com.akash.newsapp.base.Event
+import com.akash.newsapp.base.Result
 import com.akash.newsapp.base.constants.Category
 import com.akash.newsapp.data.repositories.NewsRepository
-import com.akash.newsapp.base.Result
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -56,14 +56,12 @@ class ArticleViewModel @Inject constructor(
             is Result.Success -> {
                 withContext(Dispatchers.Main) {
                     result.data.articles.toMutableList().forEach { article ->
-                        article.urlToImage?.let {
-                            tempList.add(
-                                ArticleRowViewModel(
-                                    article,
-                                    this@ArticleViewModel
-                                )
+                        tempList.add(
+                            ArticleRowViewModel(
+                                article,
+                                this@ArticleViewModel
                             )
-                        }
+                        )
                     }
                     _articleList.value = tempList
                     if (isFromSwipeRefresh) {

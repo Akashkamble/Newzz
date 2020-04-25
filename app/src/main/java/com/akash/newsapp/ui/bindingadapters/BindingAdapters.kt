@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.request.CachePolicy
 import coil.transform.RoundedCornersTransformation
+import com.akash.newsapp.R
 import com.akash.newsapp.ui.adapters.RecyclerViewBindingAdapter
 import com.akash.newsapp.base.BaseRowModel
 import com.akash.newsapp.utils.extensions.toPx
@@ -19,8 +20,11 @@ import glimpse.coil.GlimpseTransformation
  * Created by Akash on 2019-09-07
  */
 @BindingAdapter("loadUrl", "cornerRadius", requireAll = true)
-fun ImageView.loadUrl(url: String, radius: Float) {
+fun ImageView.loadUrl(url: String?, radius: Float) {
     this.load(url) {
+        error(R.drawable.ic_newzz_error)
+        placeholder(R.drawable.ic_newzz_error)
+        fallback(R.drawable.ic_newzz_error)
         transformations(GlimpseTransformation(), RoundedCornersTransformation(radius.toPx()))
         memoryCachePolicy(CachePolicy.READ_ONLY)
     }
