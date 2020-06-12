@@ -9,8 +9,13 @@ import com.akash.newsapp.base.Event
 import com.akash.newsapp.base.Result
 import com.akash.newsapp.base.constants.Category
 import com.akash.newsapp.data.repositories.NewsRepository
-import kotlinx.coroutines.*
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
+import kotlinx.coroutines.withContext
 
 class ArticleViewModel @Inject constructor(
     private val newsRepository: NewsRepository
@@ -104,5 +109,4 @@ class ArticleViewModel @Inject constructor(
         data class ShowToast(val toastMessage: String) : ViewEvent()
         object FinishRefresh : ViewEvent()
     }
-
 }

@@ -7,9 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
 import com.akash.newsapp.NewsApplication
 import com.akash.newsapp.R
-import com.akash.newsapp.ui.adapters.NewsCategoryAdapter
 import com.akash.newsapp.base.constants.Category
 import com.akash.newsapp.databinding.ActivityMainBinding
+import com.akash.newsapp.ui.adapters.NewsCategoryAdapter
 import com.akash.newsapp.utils.PreferenceHelper.Companion.IS_DARK_MODE
 import com.akash.newsapp.utils.PreferenceHelper.Companion.NOT_DARK_MODE
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,13 +37,12 @@ class NewsActivity : AppCompatActivity() {
             setUpThemeToggleImage()
             viewPager.addOnPageChangeListener(object :
                 ViewPager.OnPageChangeListener {
-                override fun onPageScrollStateChanged(state: Int) {}
+                override fun onPageScrollStateChanged(state: Int) {
+                    // onPageScrollStateChanged
+                }
 
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    // onPageScrolled
                 }
 
                 override fun onPageSelected(position: Int) {
@@ -123,7 +122,6 @@ class NewsActivity : AppCompatActivity() {
                 2 -> TITLE_TECHNOLOGY
                 else -> throw UnsupportedOperationException()
             }
-
     }
 
     private fun setUpViewPager() {
@@ -150,38 +148,31 @@ class NewsActivity : AppCompatActivity() {
         else -> R.id.general
     }
 
-
     private val onNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.general -> {
-                    if (binding.viewPager.currentItem == 0)
-                        scrollToTop(0)
-                    else
-                        binding.apply {
-                            viewPager.currentItem = 0
-                            toolbarTitle.text = TITLE_GENERAL
-                        }
+                    if (binding.viewPager.currentItem == 0) scrollToTop(0)
+                    else binding.apply {
+                        viewPager.currentItem = 0
+                        toolbarTitle.text = TITLE_GENERAL
+                    }
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.science -> {
-                    if (binding.viewPager.currentItem == 1)
-                        scrollToTop(1)
-                    else
-                        binding.apply {
-                            viewPager.currentItem = 1
-                            toolbarTitle.text = TITLE_BUSINESS
-                        }
+                    if (binding.viewPager.currentItem == 1) scrollToTop(1)
+                    else binding.apply {
+                        viewPager.currentItem = 1
+                        toolbarTitle.text = TITLE_BUSINESS
+                    }
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.technology -> {
-                    if (binding.viewPager.currentItem == 2)
-                        scrollToTop(2)
-                    else
-                        binding.apply {
-                            viewPager.currentItem = 2
-                            toolbarTitle.text = TITLE_TECHNOLOGY
-                        }
+                    if (binding.viewPager.currentItem == 2) scrollToTop(2)
+                    else binding.apply {
+                        viewPager.currentItem = 2
+                        toolbarTitle.text = TITLE_TECHNOLOGY
+                    }
                     return@OnNavigationItemSelectedListener true
                 }
             }

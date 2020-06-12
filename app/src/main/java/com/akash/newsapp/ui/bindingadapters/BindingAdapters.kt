@@ -10,10 +10,10 @@ import coil.api.load
 import coil.request.CachePolicy
 import coil.transform.RoundedCornersTransformation
 import com.akash.newsapp.R
-import com.akash.newsapp.ui.adapters.RecyclerViewBindingAdapter
 import com.akash.newsapp.base.BaseRowModel
-import com.akash.newsapp.utils.extensions.toPx
+import com.akash.newsapp.ui.adapters.RecyclerViewBindingAdapter
 import com.akash.newsapp.ui.itemdecoration.DividerItemDecoration
+import com.akash.newsapp.utils.extensions.toPx
 import glimpse.coil.GlimpseTransformation
 
 /**
@@ -23,7 +23,6 @@ import glimpse.coil.GlimpseTransformation
 fun ImageView.loadUrl(url: String?, radius: Float) {
     this.load(url) {
         error(R.drawable.ic_newzz_error)
-        placeholder(R.drawable.ic_newzz_error)
         fallback(R.drawable.ic_newzz_error)
         transformations(GlimpseTransformation(), RoundedCornersTransformation(radius.toPx()))
         memoryCachePolicy(CachePolicy.READ_ONLY)
@@ -33,8 +32,7 @@ fun ImageView.loadUrl(url: String?, radius: Float) {
 @BindingAdapter("listData", "setDecorator", requireAll = false)
 fun RecyclerView.setRowLayoutData(listData: List<BaseRowModel>?, decorator: Drawable?) {
 
-    if (listData == null)
-        return
+    if (listData == null) return
 
     var adapter = this.adapter
 
