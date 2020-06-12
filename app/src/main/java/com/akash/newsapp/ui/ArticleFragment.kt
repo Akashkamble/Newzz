@@ -99,9 +99,6 @@ class ArticleFragment : androidx.fragment.app.Fragment() {
     private fun isDark() = NewsApplication.prefs.isDark == IS_DARK_MODE
 
     fun scrollToTop() {
-        if (::binding.isInitialized)
-            binding.articleList.smoothScrollToPosition(0)
+        if (::binding.isInitialized) binding.articleList.smoothScrollToPosition(0)
     }
-
 }
-

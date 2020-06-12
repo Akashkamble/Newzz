@@ -7,7 +7,7 @@
 ![Newzz](https://user-images.githubusercontent.com/13314984/66075300-e86ffb80-e578-11e9-96f4-44d0ff63d12d.gif)
 
 
-## The app built using MVVM architecture and contains following libraries
+## The app built using MVVM architecture and contains following libraries and tools
 
 - [Constraint Layout](https://developer.android.com/training/constraint-layout/) (UI)
 
@@ -22,6 +22,8 @@
 - [Glimpse-Android](https://github.com/the-super-toys/glimpse-android) (A content-aware cropping library for Android)
 
 - [Moshi](https://github.com/square/moshi) (Kotlin JSON library for Android from Square)
+
+- [Ktlint](https://ktlint.github.io/) (Linting)
 
 
 # Note

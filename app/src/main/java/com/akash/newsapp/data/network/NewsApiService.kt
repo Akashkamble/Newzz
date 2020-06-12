@@ -1,8 +1,10 @@
 package com.akash.newsapp.data.network
 
 import com.akash.newsapp.NewsApplication
-import com.akash.newsapp.data.response.NewsResponse
 import com.akash.newsapp.base.constants.Constants
+import com.akash.newsapp.data.response.NewsResponse
+import java.io.File
+import java.util.concurrent.TimeUnit
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
@@ -12,11 +14,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-import java.io.File
-import java.util.concurrent.TimeUnit
 
 interface NewsApiService {
-
 
     @GET("top-headlines?sortBy=publishedAt&pageSize=100")
     suspend fun getArticlesByCateGoryAsync(
@@ -24,13 +23,13 @@ interface NewsApiService {
         @Query("country") country: String = Constants.COUNTRY
     ): Response<NewsResponse>
 
-
     companion object {
 
         private const val HEADER_CACHE_CONTROL = "Cache-Control"
         private const val HEADER_PRAGMA = "Pragma"
         private const val cacheSize = (5 * 1024 * 1024).toLong() // 5 MB
-
+        private const val MAX_AGE = 5
+        private const val MAX_STALE = 7
 
         operator fun invoke(): NewsApiService {
             val requestInterceptor = Interceptor { chain ->
@@ -38,7 +37,7 @@ interface NewsApiService {
                 val response = chain.proceed(chain.request())
 
                 val cacheControl = CacheControl.Builder()
-                    .maxAge(5, TimeUnit.SECONDS)
+                    .maxAge(MAX_AGE, TimeUnit.SECONDS)
                     .build()
 
                 return@Interceptor response.newBuilder()
@@ -51,7 +50,6 @@ interface NewsApiService {
             val cache = Cache(File(NewsApplication.instances.cacheDir, "networkCache"), cacheSize)
 
             val offlineInterceptor = Interceptor { chain ->
-
 
                 val url = chain.request()
                     .url()
@@ -70,7 +68,7 @@ interface NewsApiService {
                 } else {
 
                     val cacheControl = CacheControl.Builder()
-                        .maxStale(7, TimeUnit.DAYS)
+                        .maxStale(MAX_STALE, TimeUnit.DAYS)
                         .build()
 
                     request = request
@@ -80,7 +78,6 @@ interface NewsApiService {
                         .removeHeader(HEADER_CACHE_CONTROL)
                         .cacheControl(cacheControl)
                         .build()
-
                 }
 
                 return@Interceptor chain.proceed(request)

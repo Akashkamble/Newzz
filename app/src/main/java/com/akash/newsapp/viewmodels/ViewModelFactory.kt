@@ -9,6 +9,7 @@ import javax.inject.Singleton
 /**
  * Created by Akash on 2020-01-15
  */
+@Suppress("UNCHECKED_CAST")
 @Singleton
 class ViewModelFactory @Inject constructor(
     private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
@@ -18,10 +19,9 @@ class ViewModelFactory @Inject constructor(
             modelClass.isAssignableFrom(it.key)
         }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
         try {
-            @Suppress("UNCHECKED_CAST")
             return creator.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException(e)
+        } catch (e: ClassCastException) {
+            throw ClassCastException(e.localizedMessage)
         }
     }
 }

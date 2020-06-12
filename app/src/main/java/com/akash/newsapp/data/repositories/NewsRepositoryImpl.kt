@@ -1,14 +1,14 @@
 package com.akash.newsapp.data.repositories
 
+import com.akash.newsapp.base.Result
+import com.akash.newsapp.data.network.NewsApiService
 import com.akash.newsapp.data.response.NewsError
 import com.akash.newsapp.data.response.NewsResponse
-import com.akash.newsapp.data.network.NewsApiService
-import com.akash.newsapp.base.Result
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
 
 class NewsRepositoryImpl constructor(
     private val newsApiService: NewsApiService,
@@ -36,8 +36,7 @@ class NewsRepositoryImpl constructor(
                     )
                 }
             }
-
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             e.printStackTrace()
             var errorMessage = e.localizedMessage
             if (e.localizedMessage!!.contains("Unable to resolve host")) {

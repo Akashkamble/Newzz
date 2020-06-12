@@ -12,7 +12,6 @@ import com.akash.newsapp.utils.extensions.toPx
  * Created by Akash on 2020-01-27
  */
 class DividerItemDecoration(private val divider: Drawable) : ItemDecoration() {
-    private val DP_4 = 4.0f
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         val right = parent.width - parent.paddingRight
@@ -37,5 +36,9 @@ class DividerItemDecoration(private val divider: Drawable) : ItemDecoration() {
         super.getItemOffsets(outRect, view, parent, state)
         outRect.top = DP_4.toPx().toInt()
         outRect.bottom = DP_4.toPx().toInt()
+    }
+
+    companion object {
+        private const val DP_4 = 4.0f
     }
 }

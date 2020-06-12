@@ -26,7 +26,7 @@ class NewsApplication : Application() {
             ImageLoader(this) {
                 crossfade(true)
                 allowHardware(false)
-                bitmapPoolPercentage(0.5)
+                bitmapPoolPercentage(BITMAP_POOL_PERCENTAGE_MULTIPLIER)
                 okHttpClient {
                     OkHttpClient.Builder()
                         .cache(CoilUtils.createDefaultCache(this@NewsApplication))
@@ -35,10 +35,11 @@ class NewsApplication : Application() {
             }
         }
     }
+
     companion object {
         lateinit var instances: NewsApplication
+        private const val BITMAP_POOL_PERCENTAGE_MULTIPLIER = 0.5
         val prefs: PreferenceHelper by lazy { PreferenceHelper(instances) }
-
 
         fun isNetworkConnected(): Boolean {
             val connectivityManager =
